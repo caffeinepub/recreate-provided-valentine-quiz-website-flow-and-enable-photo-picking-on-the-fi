@@ -1,2 +1,3 @@
-# recreate-provided-valentine-quiz-website-flow-and-enable-photo-picking-on-the-fi
-Exported from Caffeine project: Recreate provided Valentine quiz website flow and enable photo picking on the final Memories page
+## 
+
+To run app build and run docker image: `docker build -t app . docker run -it --network host app`

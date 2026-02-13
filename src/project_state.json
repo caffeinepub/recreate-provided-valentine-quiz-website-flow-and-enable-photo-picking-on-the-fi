@@ -1,0 +1,232 @@
+{
+  "schemaVersion": "1.0.0",
+  "projectStateVersion": 23,
+  "summary": "Valentine-themed interactive quiz website (Wania) with background music, heart animations, and an “Our Memories” gallery + love letter; user approved Version 24 preview and confirmed to proceed with the build/deploy sequence.",
+  "architectural_notes": [
+    "Memories page needs a client-side image selection mechanism (e.g., <input type=\"file\" accept=\"image/*\" multiple>) and a strategy for where selected images live (session-only vs persisted upload/storage).",
+    "Need a way to include user-provided images in the Memories gallery (e.g., preloaded/static assets or bundled defaults) in addition to user-selected local files."
+  ],
+  "known_issues": [
+    "Love letter text is not visible on the final page (likely not rendering or hidden by styling).",
+    "Color theme appears to have shifted from pink to white compared to expected styling.",
+    "Some quiz answer options are not fully visible (likely layout/overflow/responsive CSS issue).",
+    "Some text/letters appear missing (likely font loading or CSS causing clipping/overflow/visibility issues).",
+    "Deployed/live version is missing the user-provided pictures (bundled/preloaded memory images not present in production build).",
+    "User requested reverting from Version 22 to Version 21 (Version 22 not approved for main live)."
+  ],
+  "isFixRequest": false,
+  "existing_features": [
+    {
+      "id": "feature-implement-the-provided-single-page-valentine-quiz-experience-in-the-current-react-app-matching-the-supplied-html-css-js-behavior-a-welcome-screen-welcome-wania-akhand-the-ultimate-valentine-championship-a-start-baby-button-that-starts-the-quiz-multiple-choice-questions-with-the-exact-question-text-options-answers-from-the-user-s-code-and-progression-to-the-next-question-only-on-correct-answers",
+      "title": "Implement the provided single-page Valentine quiz experience in the current React app, matching the supplied HTML/CSS/JS behavior: a welcome screen (“Welcome Wania Akhand”, “The Ultimate Valentine Championship”), a “Start Baby” button that starts the quiz, multiple-choice questions with the exact question text/options/answers from the user’s code, and progression to the next question only on correct answers.",
+      "reqIds": [
+        "REQ-1"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-background-music-playback-that-starts-when-the-user-presses-the-start-button-and-loops-thereafter-mirroring-the-behavior-of-the-provided-html-audio-loop-volume-0-15-provide-a-clearly-named-audio-file-location-under-the-frontend-public-assets-so-the-owner-can-replace-it-with-their-own-mp3-without-code-changes",
+      "title": "Add background music playback that starts when the user presses the Start button (and loops thereafter), mirroring the behavior of the provided HTML (<audio loop> + volume ~0.15). Provide a clearly named audio file location under the frontend public assets so the owner can replace it with their own MP3 without code changes.",
+      "reqIds": [
+        "REQ-2"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-on-the-final-page-after-the-quiz-show-an-open-our-memories-tap-to-open-our-memories-interaction-that-reveals-1-a-memories-gallery-section-and-2-the-love-letter-text-from-the-user-s-provided-code-in-english-as-written-including-names-sign-off",
+      "title": "On the final page after the quiz, show an “Open Our Memories” / “Tap to Open Our Memories” interaction that reveals: (1) a memories gallery section and (2) the love letter text from the user’s provided code (in English as written, including names/sign-off).",
+      "reqIds": [
+        "REQ-3"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-on-the-final-our-memories-view-allow-the-recipient-to-add-select-photos-from-her-device-gallery-via-a-file-picker-multiple-image-selection-selected-photos-must-immediately-display-in-the-memories-gallery-for-that-session-without-requiring-internet-identity-login",
+      "title": "On the final “Our Memories” view, allow the recipient to add/select photos from her device gallery via a file picker (multiple image selection). Selected photos must immediately display in the memories gallery for that session without requiring Internet Identity login.",
+      "reqIds": [
+        "REQ-4"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-keep-the-existing-backend-stored-media-gallery-behavior-intact-any-previously-uploaded-media-items-fetched-from-the-backend-should-continue-to-display-in-our-memories-alongside-or-clearly-separated-from-the-recipient-s-locally-selected-photos",
+      "title": "Keep the existing backend-stored media gallery behavior intact: any previously uploaded media items fetched from the backend should continue to display in “Our Memories”, alongside (or clearly separated from) the recipient’s locally selected photos.",
+      "reqIds": [
+        "REQ-5"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-the-12-user-uploaded-images-as-bundled-static-assets-and-display-them-as-already-selected-items-in-the-add-your-photos-section-the-same-area-that-currently-shows-images-chosen-via-the-file-picker-so-the-final-our-memories-result-includes-these-photos-without-requiring-the-recipient-to-manually-pick-them",
+      "title": "Add the 12 user-uploaded images as bundled static assets and display them as already-selected items in the “Add Your Photos” section (the same area that currently shows images chosen via the file picker), so the final “Our Memories” result includes these photos without requiring the recipient to manually pick them.",
+      "reqIds": [
+        "REQ-6"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-localmemoriespicker-component-to-support-preloaded-images-provided-by-the-app-e-g-via-props-while-keeping-current-behavior-for-selecting-images-from-the-device-via-the-hidden-file-input",
+      "title": "Update the LocalMemoriesPicker component to support preloaded images provided by the app (e.g., via props), while keeping current behavior for selecting images from the device via the hidden file input.",
+      "reqIds": [
+        "REQ-7"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-fix-the-final-our-memories-view-so-the-love-letter-text-is-always-visible-after-the-user-opens-memories-including-when-the-backend-returns-an-empty-blank-love-letter",
+      "title": "Fix the final “Our Memories” view so the Love Letter text is always visible after the user opens memories, including when the backend returns an empty/blank love letter.",
+      "reqIds": [
+        "REQ-8"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-fix-the-tap-to-open-our-memories-interaction-so-it-reliably-opens-the-memories-content-on-both-desktop-and-mobile-tap-click-with-accessible-button-like-behavior",
+      "title": "Fix the “Tap to Open Our Memories” interaction so it reliably opens the memories content on both desktop and mobile (tap/click), with accessible button-like behavior.",
+      "reqIds": [
+        "REQ-9"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-fix-the-memories-photos-experience-so-images-actually-load-and-can-be-opened-viewed-1-ensure-the-preloaded-memory-images-listed-in-frontend-src-valentine-preloadedmemories-ts-resolve-to-real-static-assets-at-runtime-and-2-add-a-simple-click-tap-to-open-full-view-modal-lightbox-for-memories-thumbnails-preloaded-images-and-backend-media-images",
+      "title": "Fix the Memories photos experience so images actually load and can be opened/viewed: (1) ensure the preloaded memory images listed in frontend/src/valentine/preloadedMemories.ts resolve to real static assets at runtime, and (2) add a simple click/tap-to-open full-view modal/lightbox for memories thumbnails (preloaded images and backend media images).",
+      "reqIds": [
+        "REQ-10"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-fix-the-final-our-memories-experience-so-the-love-letter-is-always-visible-and-readable-when-the-user-reaches-the-final-page-and-opens-memories-including-when-the-backend-love-letter-fetch-fails-returns-an-empty-whitespace-string-or-is-delayed",
+      "title": "Fix the final “Our Memories” experience so the Love Letter is always visible and readable when the user reaches the final page and opens memories, including when the backend love letter fetch fails, returns an empty/whitespace string, or is delayed.",
+      "reqIds": [
+        "REQ-11"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-polish-the-final-our-memories-page-layout-so-the-love-letter-and-memories-sections-look-clean-and-stable-consistent-spacing-responsive-typography-and-no-layout-jumps-when-the-love-letter-finishes-loading",
+      "title": "Polish the final “Our Memories” page layout so the Love Letter and Memories sections look clean and stable: consistent spacing, responsive typography, and no layout jumps when the love letter finishes loading.",
+      "reqIds": [
+        "REQ-12"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-restore-the-app-s-pink-valentine-look-across-the-welcome-quiz-and-memories-pages-by-removing-avoiding-white-dominant-backgrounds-and-gradients-and-ensuring-the-primary-background-reads-as-pink-valentine-color-tokens-while-keeping-text-contrast-readable",
+      "title": "Restore the app’s pink Valentine look across the Welcome, Quiz, and Memories pages by removing/avoiding white-dominant backgrounds and gradients and ensuring the primary background reads as pink (valentine color tokens) while keeping text contrast readable.",
+      "reqIds": [
+        "REQ-13"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-fix-the-quiz-answer-options-ui-so-every-option-is-fully-visible-and-usable-on-mobile-and-small-height-viewports-by-enabling-vertical-scrolling-when-needed-and-preventing-option-text-from-being-clipped-truncated",
+      "title": "Fix the quiz answer options UI so every option is fully visible and usable on mobile and small-height viewports by enabling vertical scrolling when needed and preventing option text from being clipped/truncated.",
+      "reqIds": [
+        "REQ-14"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-fix-the-app-s-styling-so-the-valentine-color-palette-renders-correctly-pink-theme-not-black-white-gray-including-ensuring-tailwind-color-tokens-like-valentine-primary-valentine-light-etc-resolve-to-the-intended-oklch-values-across-all-pages-welcome-quiz-memories-and-are-not-overridden-by-an-unintended-global-stylesheet",
+      "title": "Fix the app’s styling so the Valentine color palette renders correctly (pink theme, not black/white/gray), including ensuring Tailwind color tokens like `valentine-primary`, `valentine-light`, etc. resolve to the intended OKLCH values across all pages (Welcome/Quiz/Memories) and are not overridden by an unintended global stylesheet.",
+      "reqIds": [
+        "REQ-15"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-fix-missing-broken-letters-and-awkward-word-breaks-in-headings-and-other-ui-text-e-g-champi-onship-especially-on-ios-safari-by-adjusting-global-typography-wrapping-rules-so-headings-do-not-hyphenate-or-clip-and-text-wraps-naturally-without-inserting-hyphens-or-hiding-glyphs",
+      "title": "Fix missing/broken letters and awkward word breaks in headings and other UI text (e.g., “Champi- onship”), especially on iOS/Safari, by adjusting global typography/wrapping rules so headings do not hyphenate or clip and text wraps naturally without inserting hyphens or hiding glyphs.",
+      "reqIds": [
+        "REQ-16"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-bundle-the-12-newly-uploaded-images-as-static-frontend-assets-and-ensure-they-appear-in-the-final-our-memories-photo-picker-gallery-in-production-builds-not-only-locally-dev-use-the-exact-uploaded-filenames-d2d49712-edc8-4ca2-a057-a6595dbf49e0-2-jpeg-0c5783ba-47eb-43e1-90d9-f48852ba021a-2-jpeg-c95b86e2-1eb7-40db-a283-095d5f357368-2-jpeg-c1e09796-5ad0-4701-b55e-e658e41e963c-2-jpeg-6e8ef109-e9f1-418b-8574-93e438668a24-2-jpeg-2b8bca35-0654-4dd4-9b42-f1f24026b5c8-2-jpeg-c95b86e2-1eb7-40db-a283-095d5f357368-3-jpeg-c1e09796-5ad0-4701-b55e-e658e41e963c-3-jpeg-0c5783ba-47eb-43e1-90d9-f48852ba021a-3-jpeg-d2d49712-edc8-4ca2-a057-a6595dbf49e0-3-jpeg-6e8ef109-e9f1-418b-8574-93e438668a24-3-jpeg-2b8bca35-0654-4dd4-9b42-f1f24026b5c8-3-jpeg",
+      "title": "Bundle the 12 newly uploaded images as static frontend assets and ensure they appear in the final “Our Memories” photo picker/gallery in production builds (not only locally/dev). Use the exact uploaded filenames: d2d49712-edc8-4ca2-a057-a6595dbf49e0-2.jpeg, 0c5783ba-47eb-43e1-90d9-f48852ba021a-2.jpeg, C95B86E2-1EB7-40DB-A283-095D5F357368-2.jpeg, c1e09796-5ad0-4701-b55e-e658e41e963c-2.jpeg, 6E8EF109-E9F1-418B-8574-93E438668A24-2.jpeg, 2B8BCA35-0654-4DD4-9B42-F1F24026B5C8-2.jpeg, C95B86E2-1EB7-40DB-A283-095D5F357368-3.jpeg, c1e09796-5ad0-4701-b55e-e658e41e963c-3.jpeg, 0c5783ba-47eb-43e1-90d9-f48852ba021a-3.jpeg, d2d49712-edc8-4ca2-a057-a6595dbf49e0-3.jpeg, 6E8EF109-E9F1-418B-8574-93E438668A24-3.jpeg, 2B8BCA35-0654-4DD4-9B42-F1F24026B5C8-3.jpeg.",
+      "reqIds": [
+        "REQ-17"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-wire-the-app-s-preloaded-memories-list-into-the-final-memories-ui-so-that-localmemoriespicker-is-initialized-with-the-preloaded-image-urls-instead-of-rendering-with-no-preloaded-images",
+      "title": "Wire the app’s preloaded memories list into the final Memories UI so that LocalMemoriesPicker is initialized with the preloaded image URLs (instead of rendering with no preloaded images).",
+      "reqIds": [
+        "REQ-18"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-the-love-letter-is-always-visible-and-non-empty-on-the-final-page-by-falling-back-to-defaultloveletter-when-the-backend-love-letter-is-missing-empty-or-whitespace-only-and-keep-the-ui-stable-clean-during-loading",
+      "title": "Ensure the love letter is always visible and non-empty on the final page by falling back to `defaultLoveLetter` when the backend love letter is missing, empty, or whitespace-only, and keep the UI stable/clean during loading.",
+      "reqIds": [
+        "REQ-19"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-publish-the-user-approved-preview-deployment-version-24-to-the-live-production-site-so-it-becomes-the-active-main-version-that-users-see-when-visiting-the-app",
+      "title": "Publish the user-approved preview deployment (Version 24) to the live/production site so it becomes the active main version that users see when visiting the app.",
+      "reqIds": [
+        "REQ-21"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-after-promoting-version-24-to-production-perform-a-production-smoke-test-that-confirms-the-core-valentine-flow-works-end-to-end-welcome-screen-start-button-quiz-progression-final-our-memories-reveal-memories-gallery-renders-love-letter-text-renders",
+      "title": "After promoting Version 24 to production, perform a production smoke test that confirms the core Valentine flow works end-to-end: Welcome screen → Start button → quiz progression → final “Our Memories” reveal → memories gallery renders → love letter text renders.",
+      "reqIds": [
+        "REQ-22"
+      ],
+      "version": 1
+    }
+  ],
+  "new_feature_requests": [
+    {
+      "id": "AR-1",
+      "summary": "Build/deploy the provided Valentine quiz website from the supplied HTML/CSS/JS (music, heart effects, quiz flow, final album + love letter).",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-2",
+      "summary": "On the final “Our Memories” page, allow the user to add/select photos from her device gallery (file picker/upload) to display in the memories gallery.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-3",
+      "summary": "Add the user-provided pictures into the “Add file”/photo-picker memories flow so they appear in the final Memories gallery result.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-8",
+      "summary": "Publish the approved Version 23 preview deployment to the real live/production site so it becomes the active main version.",
+      "reqIds": [],
+      "status": "in_progress"
+    },
+    {
+      "id": "AR-9",
+      "summary": "Publish the user-approved preview deployment (Version 23) to the live/production site so it becomes the active main version that users see when visiting the app.",
+      "reqIds": [
+        "REQ-20"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-10",
+      "summary": "Publish the user-approved preview deployment (Version 24) to the live/production site so it becomes the active main version.",
+      "reqIds": [],
+      "status": "in_progress"
+    }
+  ],
+  "gameProjectType": "none",
+  "projectName": "Recreate provided Valentine quiz website flow and enable photo picking on the final Memories page",
+  "clarification_mode": "instant",
+  "clarification_rounds": 0
+}

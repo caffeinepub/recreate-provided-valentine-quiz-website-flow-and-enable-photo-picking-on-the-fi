@@ -1,0 +1,61 @@
+{
+  "kind": "implementation_plan",
+  "version": "1.0",
+  "title": "Promote approved Version 24 preview to live/production (frontend-only)",
+  "requirements": [
+    {
+      "id": "REQ-21",
+      "summary": "Ensure the live/production build surfaces the approved Version 24 experience and does not expose preview-only artifacts in the UI/URL.",
+      "acceptanceCriteria": [
+        "A production deployment is created from the exact same code/content as the approved Version 24 preview.",
+        "Visiting the app’s live/production URL shows the Version 24 experience (welcome screen, quiz flow, and final memories/love-letter view) rather than an older version.",
+        "No development/preview build artifacts are exposed in production (e.g., preview-only URLs/labels)."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/utils/releaseMode.ts",
+          "operation": "create",
+          "description": "Add a small release-mode helper that sanitizes/removes preview-only URL/query/hash markers (e.g., preview/version flags) on initial load, leveraging the existing urlParams utilities, so production visitors do not see preview-only artifacts."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Wire the release-mode sanitization into the app bootstrap (run once on app mount) to ensure production loads the standard Version 24 welcome → quiz → memories flow without preview-only labels/URLs."
+        },
+        {
+          "path": "frontend/PRODUCTION_PROMOTION.md",
+          "operation": "create",
+          "description": "Document the concrete promotion steps to ensure production is deployed from the exact approved Version 24 code (e.g., deploy from the same commit/tag as preview) and include a short verification checklist focused on avoiding preview-only artifacts."
+        }
+      ]
+    },
+    {
+      "id": "REQ-22",
+      "summary": "Provide a production smoke-test procedure and ensure the core Valentine flow interactions are reliable and match the intended production UX.",
+      "acceptanceCriteria": [
+        "In production, clicking the Start button transitions from the Welcome screen to the Quiz screen.",
+        "In production, the quiz allows progressing only on correct answers and reaches the final page on completion.",
+        "In production, the “Open Our Memories” interaction reliably opens the memories content via tap/click on desktop and mobile.",
+        "In production, the memories gallery displays thumbnails and can open the lightbox view when a thumbnail is clicked/tapped.",
+        "In production, the love letter text is visible and readable in the final memories view."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/ValentineMessage.tsx",
+          "operation": "modify",
+          "description": "Align the memories CTA copy with the required production smoke-test wording (use “Open Our Memories”), and harden the tap/click interaction (accessibility/interaction attributes) so the memories reveal is reliable on desktop and mobile."
+        },
+        {
+          "path": "frontend/src/components/LocalMemoriesPicker.tsx",
+          "operation": "modify",
+          "description": "Review and, if needed, refine thumbnail click/tap handling so opening the MemoryLightbox is consistent across mobile/desktop (no interaction blockers); keep UI theme unchanged."
+        },
+        {
+          "path": "frontend/PRODUCTION_SMOKE_TEST.md",
+          "operation": "create",
+          "description": "Add a production smoke-test checklist that explicitly validates: Welcome → Start → quiz gating on correct answers → completion → “Open Our Memories” reveal → gallery thumbnails render → lightbox opens on thumbnail tap/click → love letter text renders."
+        }
+      ]
+    }
+  ]
+}

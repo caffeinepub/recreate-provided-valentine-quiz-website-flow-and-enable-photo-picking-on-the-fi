@@ -1,0 +1,49 @@
+{
+  "kind": "feature_evidence_report",
+  "features": [
+    {
+      "featureId": "feature-publish-the-user-approved-preview-deployment-version-24-to-the-live-production-site-so-it-becomes-the-active-main-version-that-users-see-when-visiting-the-app",
+      "featureTitle": "Publish the user-approved preview deployment (Version 24) to the live/production site so it becomes the active main version that users see when visiting the app.",
+      "files": [
+        "frontend/PRODUCTION_PROMOTION.md",
+        "frontend/src/App.tsx",
+        "frontend/src/utils/releaseMode.ts"
+      ],
+      "components": [
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "authorization@4.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-21"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-after-promoting-version-24-to-production-perform-a-production-smoke-test-that-confirms-the-core-valentine-flow-works-end-to-end-welcome-screen-start-button-quiz-progression-final-our-memories-reveal-memories-gallery-renders-love-letter-text-renders",
+      "featureTitle": "After promoting Version 24 to production, perform a production smoke test that confirms the core Valentine flow works end-to-end: Welcome screen → Start button → quiz progression → final “Our Memories” reveal → memories gallery renders → love letter text renders.",
+      "files": [
+        "frontend/PRODUCTION_SMOKE_TEST.md",
+        "frontend/src/components/LocalMemoriesPicker.tsx",
+        "frontend/src/pages/ValentineMessage.tsx"
+      ],
+      "components": [
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "authorization@4.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-22"
+      ],
+      "confidence": "high"
+    }
+  ]
+}

@@ -1,0 +1,59 @@
+{
+  "kind": "build_request",
+  "title": "Promote approved Version 24 preview to live/production",
+  "priority": "normal",
+  "requirements": [
+    {
+      "id": "REQ-21",
+      "text": "Publish the user-approved preview deployment (Version 24) to the live/production site so it becomes the active main version that users see when visiting the app.",
+      "target": "unknown",
+      "source": {
+        "messageIds": [
+          "msg-4"
+        ],
+        "quotes": [
+          "Yes"
+        ]
+      },
+      "acceptanceCriteria": [
+        "A production deployment is created from the exact same code/content as the approved Version 24 preview.",
+        "Visiting the app’s live/production URL shows the Version 24 experience (welcome screen, quiz flow, and final memories/love-letter view) rather than an older version.",
+        "No development/preview build artifacts are exposed in production (e.g., preview-only URLs/labels)."
+      ]
+    },
+    {
+      "id": "REQ-22",
+      "text": "After promoting Version 24 to production, perform a production smoke test that confirms the core Valentine flow works end-to-end: Welcome screen → Start button → quiz progression → final “Our Memories” reveal → memories gallery renders → love letter text renders.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-4"
+        ],
+        "quotes": [
+          "Yes"
+        ]
+      },
+      "acceptanceCriteria": [
+        "In production, clicking the Start button transitions from the Welcome screen to the Quiz screen.",
+        "In production, the quiz allows progressing only on correct answers and reaches the final page on completion.",
+        "In production, the “Open Our Memories” interaction reliably opens the memories content via tap/click on desktop and mobile.",
+        "In production, the memories gallery displays thumbnails and can open the lightbox view when a thumbnail is clicked/tapped.",
+        "In production, the love letter text is visible and readable in the final memories view."
+      ]
+    }
+  ],
+  "constraints": [
+    "Do not edit files under frontend/src/components/ui or any other frontend immutable paths listed in SYSTEM_CONTEXT.",
+    "Respect the single-actor Motoko backend architecture (all backend logic in backend/main.mo).",
+    "Do not introduce new backend services, external databases, or third-party auth providers beyond Internet Identity."
+  ],
+  "nonGoals": [
+    "Do not add new quiz questions, change existing question text, or alter correct answers.",
+    "Do not redesign the UI/visual theme as part of this deploy-only request.",
+    "Do not add new backend features or modify backend data schemas unless required for the production promotion."
+  ],
+  "imageRequirements": {
+    "required": [],
+    "edits": []
+  }
+}
