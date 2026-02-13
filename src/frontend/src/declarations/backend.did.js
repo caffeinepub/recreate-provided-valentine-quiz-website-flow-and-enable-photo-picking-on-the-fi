@@ -78,6 +78,7 @@ export const idlService = IDL.Service({
   'getCallerUserProfile' : IDL.Func([], [IDL.Opt(UserProfile)], ['query']),
   'getCallerUserRole' : IDL.Func([], [UserRole], ['query']),
   'getLoveLetter' : IDL.Func([], [IDL.Text], ['query']),
+  'getLoveLetterAuthor' : IDL.Func([], [IDL.Text], ['query']),
   'getOwner' : IDL.Func([], [IDL.Opt(IDL.Principal)], ['query']),
   'getUserProfile' : IDL.Func(
       [IDL.Principal],
@@ -159,6 +160,7 @@ export const idlFactory = ({ IDL }) => {
     'getCallerUserProfile' : IDL.Func([], [IDL.Opt(UserProfile)], ['query']),
     'getCallerUserRole' : IDL.Func([], [UserRole], ['query']),
     'getLoveLetter' : IDL.Func([], [IDL.Text], ['query']),
+    'getLoveLetterAuthor' : IDL.Func([], [IDL.Text], ['query']),
     'getOwner' : IDL.Func([], [IDL.Opt(IDL.Principal)], ['query']),
     'getUserProfile' : IDL.Func(
         [IDL.Principal],

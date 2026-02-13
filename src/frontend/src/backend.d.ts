@@ -42,6 +42,7 @@ export interface backendInterface {
     getCallerUserProfile(): Promise<UserProfile | null>;
     getCallerUserRole(): Promise<UserRole>;
     getLoveLetter(): Promise<string>;
+    getLoveLetterAuthor(): Promise<string>;
     getOwner(): Promise<Principal | null>;
     getUserProfile(user: Principal): Promise<UserProfile | null>;
     isCallerAdmin(): Promise<boolean>;

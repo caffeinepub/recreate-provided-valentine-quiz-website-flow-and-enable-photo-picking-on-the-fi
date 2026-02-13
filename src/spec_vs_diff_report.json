@@ -1,50 +1,48 @@
 {
   "kind": "spec_vs_diff_report",
   "version": "1.0",
-  "generatedAt": "2026-02-13T20:42:53.606Z",
-  "summary": "The diff is not publish-only: it modifies backend code and project metadata, and adds promotion/smoke-test documentation templates. REQ-23’s “no code/content changes” constraint is violated by the backend/main.mo modification, and REQ-24’s smoke test is not shown as completed (results file is a blank template).",
+  "generatedAt": "2026-02-13T21:35:14.125Z",
+  "summary": "Diff adds a backend migration module and wires it into the Motoko actor, but the love letter text updated in both the backend default and migration does not match the requested frontend `defaultLoveLetter` (it uses a “My beloved Marianne… Best,\\nNikita” letter, not the required one that begins with “Wania,” and ends with “Shabab ❤️”). No frontend changes are shown to implement the required fallback-to-default behavior.",
   "missing_requirements": [
     {
-      "id": "REQ-23",
-      "requirement": "Publish the user-approved preview deployment (Version 25) to the live/production site with no code or content changes (promote the exact approved Version 25 build/commit).",
-      "reason": "The diff includes code/project changes, which contradicts the requirement to promote with no additional changes introduced. There is no evidence in the diff of an actual deployment/promotion action; instead there are repository changes.",
+      "id": "REQ-35",
+      "requirement": "Update `backend/main.mo` `loveLetterTemplate` so `getLoveLetter()` returns exactly the same text as `frontend/src/valentine/loveLetter.ts` `defaultLoveLetter` (byte-for-byte), beginning with “Wania,” and ending with “Shabab ❤️”.",
+      "reason": "`loveLetterTemplate` was updated, but to a different letter (“My beloved Marianne,… Best,\\nNikita”) rather than the required Wania/Shabab ❤️ text; therefore fresh deploy output will not match the frontend default.",
       "evidence": [
-        "backend/main.mo",
-        "project_state.json",
-        "frontend-file-summaries.txt"
+        "backend/main.mo (loveLetterTemplate set to \"My beloved Marianne,...\\n\\nBest,\\nNikita\" )",
+        "backend/migration.mo (correctLoveLetterText is also \"My beloved Marianne,...\\n\\nBest,\\nNikita\" )"
       ]
     },
     {
-      "id": "REQ-24",
-      "requirement": "Perform a production smoke test using frontend/PRODUCTION_SMOKE_TEST.md on at least 2 browsers and 2 device types, and document pass/fail (or failures with repro notes).",
-      "reason": "A results file was added but it is not filled in (placeholders like \"[To be completed]\" and unchecked items), so there is no evidence the smoke test was actually executed and recorded.",
+      "id": "REQ-36",
+      "requirement": "Add conditional upgrade migration so the stored love letter is corrected only if it still equals the previously-shipped wrong default backend template (Nikita/family letter), and must not overwrite customized letters.",
+      "reason": "A conditional migration exists, but it migrates from the wrong template to the same incorrect “My beloved Marianne… Best, Nikita” text, not to the required `defaultLoveLetter` text. Thus the upgrade does not correct to the requested letter.",
       "evidence": [
-        "frontend/PRODUCTION_SMOKE_TEST_RESULTS_V25.md"
+        "backend/migration.mo (if old.loveLetterTemplate == wrongLoveLetterText then correctLoveLetterText; correctLoveLetterText is \"My beloved Marianne,...\\n\\nBest,\\nNikita\" )"
+      ]
+    },
+    {
+      "id": "REQ-37",
+      "requirement": "Frontend should use backend letter when present; otherwise (missing/empty/whitespace-only or query fails) display `defaultLoveLetter` from `frontend/src/valentine/loveLetter.ts`, preserving formatting (`whitespace-pre-wrap`).",
+      "reason": "No frontend files are modified in the diff summary, so there is no evidence the UI fallback/error handling/whitespace-only handling was implemented.",
+      "evidence": [
+        "File diff summary shows only backend/migration.mo added; backend/main.mo and project_state.json modified; no frontend files changed."
       ]
     }
   ],
   "hallucinated_features": [
     {
-      "description": "New/expanded backend authorization/access-control behavior including owner initialization and restrictions on who can add media / access profiles.",
-      "reason": "BuildRequest explicitly constrains this to publish-only with no new features or backend changes; these backend functional changes are not requested by REQ-23/REQ-24.",
+      "description": "Added/modified project metadata (`project_state.json`) content unrelated to the specified backend template/migration and frontend fallback requirements.",
+      "reason": "The BuildRequest does not request changes to project tracking/state metadata; only backend/main.mo (and migration if needed) plus frontend behavior were requested.",
       "evidence": [
-        "backend/main.mo"
-      ]
-    },
-    {
-      "description": "Added a dedicated production promotion record document (Production Promotion - Version 25).",
-      "reason": "REQ-23 requests promotion with no changes; while documentation may be helpful, this specific new document is not requested as a requirement and constitutes an added artifact/change.",
-      "evidence": [
-        "frontend/PRODUCTION_PROMOTION_V25.md"
+        "project_state.json"
       ]
     }
   ],
-  "confidence": 0.74,
+  "confidence": 0.86,
   "changed_files": [
     "backend/main.mo",
-    "frontend-file-summaries.txt",
-    "frontend/PRODUCTION_PROMOTION_V25.md",
-    "frontend/PRODUCTION_SMOKE_TEST_RESULTS_V25.md",
+    "backend/migration.mo",
     "project_state.json"
   ]
 }

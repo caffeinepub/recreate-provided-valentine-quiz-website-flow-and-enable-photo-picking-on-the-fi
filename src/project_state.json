@@ -1,10 +1,12 @@
 {
   "schemaVersion": "1.0.0",
-  "projectStateVersion": 25,
-  "summary": "Valentine-themed interactive quiz website (Wania) with background music, heart animations, and an “Our Memories” gallery + love letter; user approved Version 25 and requested it be published to the live/production site with no changes.",
+  "projectStateVersion": 35,
+  "summary": "User reports the love letter still was not changed/updated as requested (even after the latest build attempt, e.g., Draft Version 30).",
   "architectural_notes": [
     "Memories page needs a client-side image selection mechanism (e.g., <input type=\"file\" accept=\"image/*\" multiple>) and a strategy for where selected images live (session-only vs persisted upload/storage).",
-    "Need a way to include user-provided images in the Memories gallery (e.g., preloaded/static assets or bundled defaults) in addition to user-selected local files."
+    "Need a way to include user-provided images in the Memories gallery (e.g., preloaded/static assets or bundled defaults) in addition to user-selected local files.",
+    "Love letter content must remain exactly as user-provided (avoid unintended fallback/overwrites across versions/deployments).",
+    "Love letter content must be updated to exactly match the latest user-pasted letter (including line breaks, em dash, and ❤️) across frontend fallback/default and any backend-returned default, without unintended overwrites."
   ],
   "known_issues": [
     "Love letter text is not visible on the final page (likely not rendering or hidden by styling).",
@@ -12,9 +14,11 @@
     "Some quiz answer options are not fully visible (likely layout/overflow/responsive CSS issue).",
     "Some text/letters appear missing (likely font loading or CSS causing clipping/overflow/visibility issues).",
     "Deployed/live version is missing the user-provided pictures (bundled/preloaded memory images not present in production build).",
-    "User requested reverting from Version 22 to Version 21 (Version 22 not approved for main live)."
+    "User requested reverting from Version 22 to Version 21 (Version 22 not approved for main live).",
+    "Live/production love letter text does not match the user-provided letter (Version 21 was correct); must be restored to exact user text.",
+    "User reports the love letter still did not change/update to the exact provided text in the latest build (e.g., Draft Version 30)."
   ],
-  "isFixRequest": false,
+  "isFixRequest": true,
   "existing_features": [
     {
       "id": "feature-implement-the-provided-single-page-valentine-quiz-experience-in-the-current-react-app-matching-the-supplied-html-css-js-behavior-a-welcome-screen-welcome-wania-akhand-the-ultimate-valentine-championship-a-start-baby-button-that-starts-the-quiz-multiple-choice-questions-with-the-exact-question-text-options-answers-from-the-user-s-code-and-progression-to-the-next-question-only-on-correct-answers",
@@ -199,6 +203,14 @@
         "REQ-24"
       ],
       "version": 1
+    },
+    {
+      "id": "feature-update-the-app-s-default-fallback-love-letter-text-to-exactly-match-the-user-provided-letter-including-punctuation-em-dash-line-breaks-and-the-emoji-so-that-when-the-backend-letter-is-missing-empty-unavailable-the-final-our-memories-page-still-displays-the-exact-intended-letter",
+      "title": "Update the app’s default/fallback love letter text to exactly match the user-provided letter (including punctuation, em dash, line breaks, and the ❤️ emoji), so that when the backend letter is missing/empty/unavailable the final “Our Memories” page still displays the exact intended letter.",
+      "reqIds": [
+        "REQ-25"
+      ],
+      "version": 1
     }
   ],
   "new_feature_requests": [
@@ -245,6 +257,108 @@
       "summary": "Publish the user-approved preview deployment (Version 25) to the live/production site with no changes.",
       "reqIds": [],
       "status": "in_progress"
+    },
+    {
+      "id": "AR-12",
+      "summary": "Update/restore the final “Our Memories” love letter to exactly match the user-provided text (as in Version 21), with no other content changes.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-14",
+      "summary": "Update the backend’s default stored love letter template so `getLoveLetter()` returns exactly the user-provided letter text by default after deployment/upgrade (including punctuation, em dash, line breaks, and the ❤️ emoji).",
+      "reqIds": [
+        "REQ-26"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-15",
+      "summary": "Update the backend default `loveLetterTemplate` so that `getLoveLetter()` returns the exact user-provided love letter (matching `frontend/src/valentine/loveLetter.ts` `defaultLoveLetter` exactly, including punctuation, line breaks, the em dash, and the ❤️ emoji).",
+      "reqIds": [
+        "REQ-27"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-16",
+      "summary": "Add/adjust upgrade migration logic (following the project’s conditional migration policy) so that existing deployed state is corrected when it contains the currently-wrong default love letter text, without overwriting an already-customized love letter that the owner may have intentionally set.",
+      "reqIds": [
+        "REQ-28"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-17",
+      "summary": "Update the app’s default/fallback love letter text (frontend/src/valentine/loveLetter.ts) to exactly match the user-provided letter, preserving all line breaks, punctuation, the em dash, and the ❤️ emoji.",
+      "reqIds": [
+        "REQ-29"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-18",
+      "summary": "Update the backend’s default stored love letter template (backend/main.mo `loveLetterTemplate`) so `getLoveLetter()` returns exactly the user-provided letter by default after deployment/upgrade, including punctuation, em dash, line breaks, and the ❤️ emoji.",
+      "reqIds": [
+        "REQ-30"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-19",
+      "summary": "Add/adjust upgrade migration logic (following the project’s conditional migration policy) so that existing deployed state is corrected when it contains the currently-wrong default love letter text, without overwriting an already-customized love letter that the owner intentionally set via `updateLoveLetter()`.",
+      "reqIds": [
+        "REQ-31"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-20",
+      "summary": "Update the frontend default/fallback love letter text (used to render the final love letter paragraph) to exactly match the user-provided message, preserving all line breaks, punctuation, curly apostrophes (e.g., “Valentine’s”, “don’t”, “you’re”), the em dash (—), and the ❤️ emoji.",
+      "reqIds": [
+        "REQ-32"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-21",
+      "summary": "Update the backend’s default stored love letter template so that `getLoveLetter()` returns the exact user-provided letter text by default (including punctuation, em dash, line breaks, curly apostrophes, and ❤️), instead of the current placeholder template.",
+      "reqIds": [
+        "REQ-33"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-22",
+      "summary": "Add/adjust upgrade migration logic (following the project’s conditional migration policy) to update existing deployed state only when it still contains the currently-wrong default love letter template, without overwriting an already-customized love letter that may have been intentionally set via `updateLoveLetter()`.",
+      "reqIds": [
+        "REQ-34"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-23",
+      "summary": "Update the backend default stored love letter template (`loveLetterTemplate` in `backend/main.mo`) so that `getLoveLetter()` returns exactly the same love letter text as `frontend/src/valentine/loveLetter.ts` exports in `defaultLoveLetter`, preserving all characters exactly (line breaks, punctuation, apostrophes, the em dash (—), and the ❤️ emoji).",
+      "reqIds": [
+        "REQ-35"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-24",
+      "summary": "Add/restore conditional upgrade migration logic (per the project’s conditional migration policy) so that when upgrading an existing deployed canister, the love letter is corrected only if the stored love letter still equals the currently-wrong default backend template (the current Nikita/family letter), and the migration must not overwrite an already-customized love letter that may have been intentionally set via `updateLoveLetter()`.",
+      "reqIds": [
+        "REQ-36"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-25",
+      "summary": "Ensure the final love letter UI is using the backend value when present, but displays the exact `defaultLoveLetter` text when the backend value is missing/empty/whitespace-only or the query fails, without altering the user’s letter formatting (keep `whitespace-pre-wrap` rendering so line breaks appear exactly as written).",
+      "reqIds": [
+        "REQ-37"
+      ],
+      "status": "pending"
     }
   ],
   "gameProjectType": "none",

@@ -135,6 +135,7 @@ export interface backendInterface {
     getCallerUserProfile(): Promise<UserProfile | null>;
     getCallerUserRole(): Promise<UserRole>;
     getLoveLetter(): Promise<string>;
+    getLoveLetterAuthor(): Promise<string>;
     getOwner(): Promise<Principal | null>;
     getUserProfile(user: Principal): Promise<UserProfile | null>;
     isCallerAdmin(): Promise<boolean>;
@@ -351,6 +352,20 @@ export class Backend implements backendInterface {
             }
         } else {
             const result = await this.actor.getLoveLetter();
+            return result;
+        }
+    }
+    async getLoveLetterAuthor(): Promise<string> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.getLoveLetterAuthor();
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.getLoveLetterAuthor();
             return result;
         }
     }

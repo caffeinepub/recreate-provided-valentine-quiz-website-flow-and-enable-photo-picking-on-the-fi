@@ -4,13 +4,16 @@ import List "mo:core/List";
 import Runtime "mo:core/Runtime";
 import Map "mo:core/Map";
 import Principal "mo:core/Principal";
+import Migration "migration";
+
 import MixinAuthorization "authorization/MixinAuthorization";
 import AccessControl "authorization/access-control";
 
+(with migration = Migration.run)
 actor {
   include MixinStorage();
 
-  // Initialize access control system
+  // Access control state
   let accessControlState = AccessControl.initState();
   include MixinAuthorization(accessControlState);
 
@@ -36,13 +39,12 @@ actor {
   let userProfiles = Map.empty<Principal, UserProfile>();
   let mediaList = List.empty<MediaItem>();
 
-  // Default Love Letter Template
-  var loveLetterTemplate : Text = "Happy Valentine's Day, my love! \n\nI cherish every moment with you. Here's to many more memories together.";
+  // Updated correct love letter template
+  var loveLetterTemplate : Text = "My beloved Marianne,\n\nFor the longest time, I was filled with memories from a previous relationship. These memories used to cloud my present. But one day that changed. At some point, I realized that I was no longer thinking about Marina. Every time we spend time together, every time we just watch TV, I feel like I fall more and more in love with you. Now, even cloudy days become the brightest, happiest, and most serene time of my day, because I get to spend it with you. I cherish every moment with you and wouldn't trade it for anything.\n\nIt's been an incredible blessing, and I want to thank you.\n\nI love you more than anything, more than anyone else could ever understand. If you still ask me \"Do you love me?\", in my opinion, it's in the running for \"Best rhetorical question of the year.\"\n\nIt's funny how things work. What you may not realize is that even just being with you, by your side, makes me feel valiant, strong, worthy, and loved. You give me a sense of purpose in my life.\n\nAll I want is for us to be together and become even more connected to each other. I want us to explore all nuances of love and discover the depths of our emotional bond so that our souls become the most intense and profound reflection of each other. A loving partnership can transcend all boundaries, giving people a second chance to live a deeply meaningful life—Emotionally, spiritually, and physically a fulfilling, passionate union that we can truly rely on. Especially when it gets hard ❤️.\n\nBest,\nNikita";
 
-  // Owner tracking - the creator of this Valentine's message
   var owner : ?Principal = null;
 
-  // Helper function to check if caller is the owner
+  // Checks if caller is the owner
   func isOwner(caller : Principal) : Bool {
     switch (owner) {
       case (null) { false };
@@ -50,25 +52,21 @@ actor {
     };
   };
 
-  // Helper function to initialize owner on first modification
+  // Sets owner on first modification
   func initializeOwner(caller : Principal) {
     switch (owner) {
       case (null) {
-        // First person to modify content becomes the owner
         if (not (AccessControl.hasPermission(accessControlState, caller, #user))) {
           Runtime.trap("Unauthorized: Only authenticated users can create Valentine's messages");
         };
         owner := ?caller;
       };
-      case (?_) {
-        // Owner already set, do nothing
-      };
+      case (?_) {};
     };
   };
 
   // User Profile Functions
   public query ({ caller }) func getCallerUserProfile() : async ?UserProfile {
-    // Authenticated users only
     if (not (AccessControl.hasPermission(accessControlState, caller, #user))) {
       Runtime.trap("Unauthorized: Only users can access profiles");
     };
@@ -76,7 +74,6 @@ actor {
   };
 
   public query ({ caller }) func getUserProfile(user : Principal) : async ?UserProfile {
-    // Admins or the user themselves
     if (caller != user and not AccessControl.isAdmin(accessControlState, caller)) {
       Runtime.trap("Unauthorized: Can only view your own profile");
     };
@@ -84,27 +81,21 @@ actor {
   };
 
   public shared ({ caller }) func saveCallerUserProfile(profile : UserProfile) : async () {
-    // Authenticated users only
     if (not (AccessControl.hasPermission(accessControlState, caller, #user))) {
       Runtime.trap("Unauthorized: Only users can save profiles");
     };
     userProfiles.add(caller, profile);
   };
 
-  // Bouquet Graphic URL
-  public query ({ caller }) func getBouquetGraphic() : async Text {
-    // Public access - anyone can view the bouquet graphic
+  // Bouquet Graphic URL - Public access (no auth required)
+  public query func getBouquetGraphic() : async Text {
     "https://api.instantdata.link/public/valentine-graphic.jpg";
   };
 
   // Media Management Functions
-
-  // Add Media (Owner Only - Creator of the Valentine's message)
   public shared ({ caller }) func addMedia(id : Text, blob : Storage.ExternalBlob, mediaType : MediaType, description : Text, fileName : Text) : async Text {
-    // Initialize owner if this is the first modification
     initializeOwner(caller);
 
-    // Only the owner can add media
     if (not isOwner(caller)) {
       Runtime.trap("Unauthorized: Only the creator of this Valentine's message can add media");
     };
@@ -121,25 +112,16 @@ actor {
     id;
   };
 
-  // Get All Media (Public Access - Anyone with the link can view)
-  public query ({ caller }) func getAllMedia() : async [MediaItem] {
-    // No authorization check - anyone with the link can view the media gallery
-    // This allows the Valentine recipient and others to see the romantic message
+  // Public access - anyone can view the Valentine's media (including guests)
+  public query func getAllMedia() : async [MediaItem] {
     mediaList.toArray();
   };
 
-  // Delete Media (Owner Only - Creator of the Valentine's message)
   public shared ({ caller }) func deleteMedia(id : Text) : async () {
-    // Only the owner can delete media
     if (not isOwner(caller)) {
       Runtime.trap("Unauthorized: Only the creator of this Valentine's message can delete media");
     };
-
-    let filteredMedia = mediaList.toArray().filter(
-      func(item) {
-        item.id != id;
-      }
-    );
+    let filteredMedia = mediaList.toArray().filter(func(item) { item.id != id });
     if (filteredMedia.size() == mediaList.size()) {
       Runtime.trap("Media not found");
     };
@@ -148,13 +130,9 @@ actor {
   };
 
   // Love Letter Management
-
-  // Update Love Letter (Owner Only - Creator of the Valentine's message)
   public shared ({ caller }) func updateLoveLetter(newLetter : Text) : async () {
-    // Initialize owner if this is the first modification
     initializeOwner(caller);
 
-    // Only the owner can update the love letter
     if (not isOwner(caller)) {
       Runtime.trap("Unauthorized: Only the creator of this Valentine's message can update the love letter");
     };
@@ -162,19 +140,22 @@ actor {
     loveLetterTemplate := newLetter;
   };
 
-  // Get Love Letter (Public Access - Anyone with the link can view)
-  public query ({ caller }) func getLoveLetter() : async Text {
-    // No authorization check - anyone with the link can view the letter
-    // This allows the Valentine recipient to read the romantic message
+  // Public access - anyone can read the love letter (including guests)
+  public query func getLoveLetter() : async Text {
     loveLetterTemplate;
   };
 
-  // Get Owner (Query function for debugging/admin purposes)
+  // Public access - anyone can see the author name
+  public query func getLoveLetterAuthor() : async Text {
+    "Nikita Voronin";
+  };
+
+  // Admin-only function to query ownership
   public query ({ caller }) func getOwner() : async ?Principal {
-    // Only admins can query the owner
     if (not AccessControl.isAdmin(accessControlState, caller)) {
       Runtime.trap("Unauthorized: Only admins can query the owner");
     };
     owner;
   };
 };
+

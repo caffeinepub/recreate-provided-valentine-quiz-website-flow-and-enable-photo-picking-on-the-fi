@@ -1,47 +1,46 @@
 {
   "kind": "coverage_report",
   "version": "1.0",
-  "generatedAt": "2026-02-13T20:42:53.609Z",
+  "generatedAt": "2026-02-13T21:35:14.128Z",
   "sources": {
     "buildRequest": true,
     "implementationPlan": true
   },
   "requirements": {
-    "total": 2,
-    "implemented": 2,
+    "total": 3,
+    "implemented": 0,
     "items": [
       {
-        "id": "REQ-23",
-        "summary": "Publish the user-approved preview deployment (Version 25) to the live/production site with no code or content changes, so it becomes the active main version that users see when visiting the app.",
-        "status": "implemented",
-        "plannedFiles": [
-          "frontend/PRODUCTION_PROMOTION_V25.md"
-        ],
-        "matchedFiles": [
-          "frontend/PRODUCTION_PROMOTION_V25.md"
-        ]
+        "id": "REQ-35",
+        "summary": "Update the backend default stored love letter template (`loveLetterTemplate` in `backend/main.mo`) so that `getLoveLetter()` returns exactly the same love letter text as `frontend/src/valentine/loveLetter.ts` exports in `defaultLoveLetter`, preserving all characters exactly (line breaks, punctuation, apostrophes, the em dash (—), and the ❤️ emoji).",
+        "status": "unknown",
+        "plannedFiles": [],
+        "matchedFiles": []
       },
       {
-        "id": "REQ-24",
-        "summary": "After promoting Version 25 to production, perform a production smoke test using the checklist in frontend/PRODUCTION_SMOKE_TEST.md to confirm the core Valentine flow works end-to-end in production.",
-        "status": "implemented",
+        "id": "REQ-36",
+        "summary": "Add/restore conditional upgrade migration logic (per the project’s conditional migration policy) so that when upgrading an existing deployed canister, the love letter is corrected only if the stored love letter still equals the currently-wrong default backend template (the current Nikita/family letter), and the migration must not overwrite an already-customized love letter that may have been intentionally set via `updateLoveLetter()`.",
+        "status": "unknown",
+        "plannedFiles": [],
+        "matchedFiles": []
+      },
+      {
+        "id": "REQ-37",
+        "summary": "Ensure the final love letter UI is using the backend value when present, but displays the exact `defaultLoveLetter` text when the backend value is missing/empty/whitespace-only or the query fails, without altering the user’s letter formatting (keep `whitespace-pre-wrap` rendering so line breaks appear exactly as written).",
+        "status": "missing",
         "plannedFiles": [
-          "frontend/PRODUCTION_SMOKE_TEST_RESULTS_V25.md"
+          "frontend/src/pages/ValentineMessage.tsx"
         ],
-        "matchedFiles": [
-          "frontend/PRODUCTION_SMOKE_TEST_RESULTS_V25.md"
-        ]
+        "matchedFiles": []
       }
     ]
   },
   "changedFiles": [
     "backend/main.mo",
+    "backend/migration.mo",
     "build-request.json",
     "feature_evidence.json",
-    "frontend-file-summaries.txt",
     "frontend-implementation-plan.json",
-    "frontend/PRODUCTION_PROMOTION_V25.md",
-    "frontend/PRODUCTION_SMOKE_TEST_RESULTS_V25.md",
     "project_state.json",
     "scratch/component-selection.json",
     "spec.md",

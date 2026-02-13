@@ -1,37 +1,21 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "Production promotion + smoke test documentation for approved Version 25 (no app changes)",
+  "title": "Love letter UI: backend-first with exact default fallback and preserved formatting",
   "requirements": [
     {
-      "id": "REQ-23",
-      "summary": "Document the promotion of the already-approved Version 25 preview build to production with no code/content changes, ensuring production runs in release mode without preview artifacts.",
+      "id": "REQ-37",
+      "summary": "Display backend love letter when available; otherwise fall back to defaultLoveLetter on empty/whitespace/error while preserving exact line breaks and preventing auto-hyphenation/reformatting.",
       "acceptanceCriteria": [
-        "Production deployment is promoted from the exact approved Version 25 build/commit (no additional changes introduced).",
-        "Visiting the production URL loads Version 25 as the active main version.",
-        "No preview-only URL parameters, version query strings, or debug labels are visible in the production UI (release mode behavior remains intact)."
+        "If the backend returns the correct letter, the UI displays it with the same line breaks as stored.",
+        "If the backend returns an empty/whitespace-only string or fails to load, the UI displays the `defaultLoveLetter` text from `frontend/src/valentine/loveLetter.ts` with all line breaks preserved.",
+        "No part of the letter text is auto-hyphenated or reformatted in a way that changes the letter’s content."
       ],
       "file_operations": [
         {
-          "path": "frontend/PRODUCTION_PROMOTION_V25.md",
-          "operation": "create",
-          "description": "Create a Version 25-specific production promotion runbook that references the existing frontend/PRODUCTION_PROMOTION.md and records the exact approved Version 25 build/commit identifier, production URL, and explicit confirmation that no code/content changes were introduced during promotion. Include a verification note to confirm release-mode behavior (e.g., preview URL parameters are sanitized and no debug labels appear) without requiring any application code changes."
-        }
-      ]
-    },
-    {
-      "id": "REQ-24",
-      "summary": "Provide a Version 25 production smoke test results log aligned to frontend/PRODUCTION_SMOKE_TEST.md and the specified end-to-end Valentine flow checks.",
-      "acceptanceCriteria": [
-        "Smoke test is completed on at least 2 browsers and 2 device types as suggested by the checklist.",
-        "The following core flow passes in production: Welcome screen → Start button starts background music → quiz progression (no advance on wrong answers) → quiz completion → final page → “Open Our Memories” reveal → memories gallery thumbnails render → lightbox opens/closes → love letter text is visible and readable.",
-        "Any failures are documented with notes sufficient to reproduce (or the run is marked as fully passing)."
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/PRODUCTION_SMOKE_TEST_RESULTS_V25.md",
-          "operation": "create",
-          "description": "Create a production smoke test results template/log for Version 25 that points testers to execute the checklist in frontend/PRODUCTION_SMOKE_TEST.md and captures: production URL, date/time, tester, browser/device matrix (at least 2 browsers and 2 device types), pass/fail per section, and reproducible notes/screenshots references for any failures. Ensure the log explicitly calls out the required core Valentine flow and records whether it passed end-to-end in production."
+          "path": "frontend/src/pages/ValentineMessage.tsx",
+          "operation": "modify",
+          "description": "Harden the displayed love letter selection logic to prefer the backend value when present, but fall back to `defaultLoveLetter` when the backend value is missing/empty/whitespace-only or when loading fails; keep `whitespace-pre-wrap` rendering and disable hyphenation (set hyphens to 'none') to avoid any automatic reformatting of the letter text."
         }
       ]
     }

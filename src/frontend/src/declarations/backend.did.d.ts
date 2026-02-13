@@ -63,6 +63,7 @@ export interface _SERVICE {
   'getCallerUserProfile' : ActorMethod<[], [] | [UserProfile]>,
   'getCallerUserRole' : ActorMethod<[], UserRole>,
   'getLoveLetter' : ActorMethod<[], string>,
+  'getLoveLetterAuthor' : ActorMethod<[], string>,
   'getOwner' : ActorMethod<[], [] | [Principal]>,
   'getUserProfile' : ActorMethod<[Principal], [] | [UserProfile]>,
   'isCallerAdmin' : ActorMethod<[], boolean>,

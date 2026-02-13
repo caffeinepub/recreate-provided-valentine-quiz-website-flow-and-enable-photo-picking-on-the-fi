@@ -1,10 +1,11 @@
 # Specification
 
 ## Summary
-**Goal:** Promote the already user-approved Version 25 preview build to the live/production site with no code or content changes, and verify it works via a production smoke test.
+**Goal:** Restore and consistently display the exact user-provided love letter text by aligning backend defaults with the frontend `defaultLoveLetter`, adding a safe conditional upgrade migration, and ensuring the UI falls back to the frontend default only when needed.
 
 **Planned changes:**
-- Promote/deploy the exact approved Version 25 build/commit to production (publish-only; no changes).
-- Run the production smoke test checklist (frontend/PRODUCTION_SMOKE_TEST.md) after deployment and record pass/fail notes.
+- Update `loveLetterTemplate` in `backend/main.mo` so `getLoveLetter()` returns text that matches `frontend/src/valentine/loveLetter.ts` `defaultLoveLetter` exactly (including all line breaks, punctuation, em dash (—), and the ❤️ emoji).
+- Add conditional upgrade migration logic so existing deployments are corrected only when the stored love letter still equals the previously-shipped wrong default backend template, without overwriting customized letters set via `updateLoveLetter()`.
+- Update the love letter UI to prefer the backend value when present, but fall back to the exact `defaultLoveLetter` when the backend value is missing/empty/whitespace-only or the query fails, preserving formatting with `whitespace-pre-wrap`.
 
-**User-visible outcome:** Visiting the production URL loads Version 25 as the active main version (without any preview/debug indicators), and the core Valentine flow works end-to-end in production.
+**User-visible outcome:** The love letter shown in the app matches the intended text and formatting exactly; existing users see the corrected default letter after upgrade unless they previously customized it.
