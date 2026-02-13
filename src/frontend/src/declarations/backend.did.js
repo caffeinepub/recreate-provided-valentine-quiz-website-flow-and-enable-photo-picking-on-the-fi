@@ -19,15 +19,15 @@ export const _CaffeineStorageRefillResult = IDL.Record({
   'success' : IDL.Opt(IDL.Bool),
   'topped_up_amount' : IDL.Opt(IDL.Nat),
 });
-export const ExternalBlob = IDL.Vec(IDL.Nat8);
-export const MediaType = IDL.Variant({
-  'video' : IDL.Null,
-  'image' : IDL.Null,
-});
 export const UserRole = IDL.Variant({
   'admin' : IDL.Null,
   'user' : IDL.Null,
   'guest' : IDL.Null,
+});
+export const ExternalBlob = IDL.Vec(IDL.Nat8);
+export const MediaType = IDL.Variant({
+  'video' : IDL.Null,
+  'image' : IDL.Null,
 });
 export const MediaItem = IDL.Record({
   'id' : IDL.Text,
@@ -66,20 +66,13 @@ export const idlService = IDL.Service({
     ),
   '_caffeineStorageUpdateGatewayPrincipals' : IDL.Func([], [], []),
   '_initializeAccessControlWithSecret' : IDL.Func([IDL.Text], [], []),
-  'addMedia' : IDL.Func(
-      [IDL.Text, ExternalBlob, MediaType, IDL.Text, IDL.Text],
-      [IDL.Text],
-      [],
-    ),
   'assignCallerUserRole' : IDL.Func([IDL.Principal, UserRole], [], []),
-  'deleteMedia' : IDL.Func([IDL.Text], [], []),
   'getAllMedia' : IDL.Func([], [IDL.Vec(MediaItem)], ['query']),
   'getBouquetGraphic' : IDL.Func([], [IDL.Text], ['query']),
   'getCallerUserProfile' : IDL.Func([], [IDL.Opt(UserProfile)], ['query']),
   'getCallerUserRole' : IDL.Func([], [UserRole], ['query']),
   'getLoveLetter' : IDL.Func([], [IDL.Text], ['query']),
   'getLoveLetterAuthor' : IDL.Func([], [IDL.Text], ['query']),
-  'getOwner' : IDL.Func([], [IDL.Opt(IDL.Principal)], ['query']),
   'getUserProfile' : IDL.Func(
       [IDL.Principal],
       [IDL.Opt(UserProfile)],
@@ -87,7 +80,7 @@ export const idlService = IDL.Service({
     ),
   'isCallerAdmin' : IDL.Func([], [IDL.Bool], ['query']),
   'saveCallerUserProfile' : IDL.Func([UserProfile], [], []),
-  'updateLoveLetter' : IDL.Func([IDL.Text], [], []),
+  'saveLoveLetter' : IDL.Func([IDL.Text], [], []),
 });
 
 export const idlInitArgs = [];
@@ -104,13 +97,13 @@ export const idlFactory = ({ IDL }) => {
     'success' : IDL.Opt(IDL.Bool),
     'topped_up_amount' : IDL.Opt(IDL.Nat),
   });
-  const ExternalBlob = IDL.Vec(IDL.Nat8);
-  const MediaType = IDL.Variant({ 'video' : IDL.Null, 'image' : IDL.Null });
   const UserRole = IDL.Variant({
     'admin' : IDL.Null,
     'user' : IDL.Null,
     'guest' : IDL.Null,
   });
+  const ExternalBlob = IDL.Vec(IDL.Nat8);
+  const MediaType = IDL.Variant({ 'video' : IDL.Null, 'image' : IDL.Null });
   const MediaItem = IDL.Record({
     'id' : IDL.Text,
     'blob' : ExternalBlob,
@@ -148,20 +141,13 @@ export const idlFactory = ({ IDL }) => {
       ),
     '_caffeineStorageUpdateGatewayPrincipals' : IDL.Func([], [], []),
     '_initializeAccessControlWithSecret' : IDL.Func([IDL.Text], [], []),
-    'addMedia' : IDL.Func(
-        [IDL.Text, ExternalBlob, MediaType, IDL.Text, IDL.Text],
-        [IDL.Text],
-        [],
-      ),
     'assignCallerUserRole' : IDL.Func([IDL.Principal, UserRole], [], []),
-    'deleteMedia' : IDL.Func([IDL.Text], [], []),
     'getAllMedia' : IDL.Func([], [IDL.Vec(MediaItem)], ['query']),
     'getBouquetGraphic' : IDL.Func([], [IDL.Text], ['query']),
     'getCallerUserProfile' : IDL.Func([], [IDL.Opt(UserProfile)], ['query']),
     'getCallerUserRole' : IDL.Func([], [UserRole], ['query']),
     'getLoveLetter' : IDL.Func([], [IDL.Text], ['query']),
     'getLoveLetterAuthor' : IDL.Func([], [IDL.Text], ['query']),
-    'getOwner' : IDL.Func([], [IDL.Opt(IDL.Principal)], ['query']),
     'getUserProfile' : IDL.Func(
         [IDL.Principal],
         [IDL.Opt(UserProfile)],
@@ -169,7 +155,7 @@ export const idlFactory = ({ IDL }) => {
       ),
     'isCallerAdmin' : IDL.Func([], [IDL.Bool], ['query']),
     'saveCallerUserProfile' : IDL.Func([UserProfile], [], []),
-    'updateLoveLetter' : IDL.Func([IDL.Text], [], []),
+    'saveLoveLetter' : IDL.Func([IDL.Text], [], []),
   });
 };
 

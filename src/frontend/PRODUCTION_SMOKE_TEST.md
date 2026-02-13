@@ -136,7 +136,7 @@ This checklist validates the core Valentine's Day experience in production after
 - [ ] No version/build query strings visible
 - [ ] No development/debug labels in UI
 - [ ] Console is free of preview-related warnings
-- [ ] Application behaves as approved Version 24
+- [ ] Application behaves as approved Version 21
 
 **Status**: ☐ Pass ☐ Fail  
 **Notes**: _______________________________________________

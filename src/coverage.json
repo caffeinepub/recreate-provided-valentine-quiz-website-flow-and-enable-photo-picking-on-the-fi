@@ -1,36 +1,42 @@
 {
   "kind": "coverage_report",
   "version": "1.0",
-  "generatedAt": "2026-02-13T21:35:14.128Z",
+  "generatedAt": "2026-02-13T22:29:27.101Z",
   "sources": {
     "buildRequest": true,
     "implementationPlan": true
   },
   "requirements": {
     "total": 3,
-    "implemented": 0,
+    "implemented": 2,
     "items": [
       {
-        "id": "REQ-35",
-        "summary": "Update the backend default stored love letter template (`loveLetterTemplate` in `backend/main.mo`) so that `getLoveLetter()` returns exactly the same love letter text as `frontend/src/valentine/loveLetter.ts` exports in `defaultLoveLetter`, preserving all characters exactly (line breaks, punctuation, apostrophes, the em dash (—), and the ❤️ emoji).",
-        "status": "unknown",
-        "plannedFiles": [],
-        "matchedFiles": []
-      },
-      {
-        "id": "REQ-36",
-        "summary": "Add/restore conditional upgrade migration logic (per the project’s conditional migration policy) so that when upgrading an existing deployed canister, the love letter is corrected only if the stored love letter still equals the currently-wrong default backend template (the current Nikita/family letter), and the migration must not overwrite an already-customized love letter that may have been intentionally set via `updateLoveLetter()`.",
-        "status": "unknown",
-        "plannedFiles": [],
-        "matchedFiles": []
-      },
-      {
-        "id": "REQ-37",
-        "summary": "Ensure the final love letter UI is using the backend value when present, but displays the exact `defaultLoveLetter` text when the backend value is missing/empty/whitespace-only or the query fails, without altering the user’s letter formatting (keep `whitespace-pre-wrap` rendering so line breaks appear exactly as written).",
-        "status": "missing",
+        "id": "REQ-45",
+        "summary": "Update the final “My Love Letter” page so the displayed letter is NOT automatically filled with `defaultLoveLetter` when the backend love letter is empty/blank; if the backend love letter is empty/whitespace-only, show an empty letter state with a clear prompt to write a letter instead.",
+        "status": "implemented",
         "plannedFiles": [
           "frontend/src/pages/ValentineMessage.tsx"
         ],
+        "matchedFiles": [
+          "frontend/src/pages/ValentineMessage.tsx"
+        ]
+      },
+      {
+        "id": "REQ-46",
+        "summary": "Change the love letter editing behavior on the final “My Love Letter” page so that starting an edit can begin from a blank textarea (not pre-populated with any prewritten template). Add a clear, explicit control to clear/erase the current letter content while editing.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/pages/ValentineMessage.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/pages/ValentineMessage.tsx"
+        ]
+      },
+      {
+        "id": "REQ-47",
+        "summary": "Initialize the backend stored love letter value as empty (no prewritten default letter) so a fresh deployment starts with no letter content until the user writes and saves it via the website.",
+        "status": "unknown",
+        "plannedFiles": [],
         "matchedFiles": []
       }
     ]
@@ -40,7 +46,13 @@
     "backend/migration.mo",
     "build-request.json",
     "feature_evidence.json",
+    "frontend-file-summaries.txt",
     "frontend-implementation-plan.json",
+    "frontend/src/backend.d.ts",
+    "frontend/src/backend.ts",
+    "frontend/src/declarations/backend.did.d.ts",
+    "frontend/src/declarations/backend.did.js",
+    "frontend/src/pages/ValentineMessage.tsx",
     "project_state.json",
     "scratch/component-selection.json",
     "spec.md",

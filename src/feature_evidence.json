@@ -1,4 +1,45 @@
 {
   "kind": "feature_evidence_report",
-  "features": []
+  "features": [
+    {
+      "featureId": "feature-update-the-final-my-love-letter-page-so-the-displayed-letter-is-not-automatically-filled-with-defaultloveletter-when-the-backend-love-letter-is-empty-blank-if-the-backend-love-letter-is-empty-whitespace-only-show-an-empty-letter-state-with-a-clear-prompt-to-write-a-letter-instead",
+      "featureTitle": "Update the final “My Love Letter” page so the displayed letter is NOT automatically filled with `defaultLoveLetter` when the backend love letter is empty/blank; if the backend love letter is empty/whitespace-only, show an empty letter state with a clear prompt to write a letter instead.",
+      "files": [
+        "frontend/src/pages/ValentineMessage.tsx"
+      ],
+      "components": [
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "authorization@4.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-45"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-change-the-love-letter-editing-behavior-on-the-final-my-love-letter-page-so-that-starting-an-edit-can-begin-from-a-blank-textarea-not-pre-populated-with-any-prewritten-template-add-a-clear-explicit-control-to-clear-erase-the-current-letter-content-while-editing",
+      "featureTitle": "Change the love letter editing behavior on the final “My Love Letter” page so that starting an edit can begin from a blank textarea (not pre-populated with any prewritten template). Add a clear, explicit control to clear/erase the current letter content while editing.",
+      "files": [
+        "frontend/src/pages/ValentineMessage.tsx"
+      ],
+      "components": [
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "authorization@4.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-46"
+      ],
+      "confidence": "high"
+    }
+  ]
 }

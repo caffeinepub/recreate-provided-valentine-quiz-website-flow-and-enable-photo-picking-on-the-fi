@@ -1,21 +1,37 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "Love letter UI: backend-first with exact default fallback and preserved formatting",
+  "title": "Allow blank love letter by default and prompt user to write on final page",
   "requirements": [
     {
-      "id": "REQ-37",
-      "summary": "Display backend love letter when available; otherwise fall back to defaultLoveLetter on empty/whitespace/error while preserving exact line breaks and preventing auto-hyphenation/reformatting.",
+      "id": "REQ-45",
+      "summary": "Stop auto-filling the final “My Love Letter” page with the prewritten default when the backend love letter is blank; show an empty-state prompt instead while preserving formatting for non-empty letters.",
       "acceptanceCriteria": [
-        "If the backend returns the correct letter, the UI displays it with the same line breaks as stored.",
-        "If the backend returns an empty/whitespace-only string or fails to load, the UI displays the `defaultLoveLetter` text from `frontend/src/valentine/loveLetter.ts` with all line breaks preserved.",
-        "No part of the letter text is auto-hyphenated or reformatted in a way that changes the letter’s content."
+        "If `getLoveLetter()` returns an empty string or whitespace, the page does not render the prewritten `defaultLoveLetter` content.",
+        "When the letter is empty, the UI shows an English prompt indicating the user can write the letter on the website (e.g., an empty state message and/or textarea placeholder).",
+        "The letter rendering continues to preserve user formatting (line breaks) for non-empty letters (e.g., `whitespace-pre-wrap`)."
       ],
       "file_operations": [
         {
           "path": "frontend/src/pages/ValentineMessage.tsx",
           "operation": "modify",
-          "description": "Harden the displayed love letter selection logic to prefer the backend value when present, but fall back to `defaultLoveLetter` when the backend value is missing/empty/whitespace-only or when loading fails; keep `whitespace-pre-wrap` rendering and disable hyphenation (set hyphens to 'none') to avoid any automatic reformatting of the letter text."
+          "description": "Update the read-only letter rendering to treat empty/whitespace-only `loveLetter` as truly empty (no fallback to `defaultLoveLetter`), and render an explicit empty-state prompt (English) encouraging the user to write a letter on the website. Keep the non-empty letter display using `whitespace-pre-wrap` to preserve line breaks. Use existing shadcn-ui primitives already imported (Card/Button/Textarea) to present the empty state; verify the component's usage instructions before implementing."
+        }
+      ]
+    },
+    {
+      "id": "REQ-46",
+      "summary": "Ensure edit mode starts from a blank textarea when no saved letter exists (never from a prewritten template) and provide a clear control to erase the current draft while editing.",
+      "acceptanceCriteria": [
+        "Entering edit mode does not automatically insert the prewritten template text into the textarea.",
+        "There is a visible control in edit mode (English label) that clears the textarea content to empty in one action.",
+        "The existing Save and Cancel behaviors still work after clearing the textarea (Save persists what’s currently in the textarea; Cancel abandons edits)."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/ValentineMessage.tsx",
+          "operation": "modify",
+          "description": "Change edit initialization so `editedLetter` is derived from the backend value only (empty string if blank/whitespace), never from `defaultLoveLetter`. Add a clearly labeled in-edit control (e.g., an outline Button labeled “Clear”/“Erase”) that sets `editedLetter` to an empty string in one action. Ensure Save uses the current textarea value (including empty) and Cancel still abandons edits. Use existing shadcn-ui Button/Textarea components already present; verify the component's usage instructions before implementing."
         }
       ]
     }

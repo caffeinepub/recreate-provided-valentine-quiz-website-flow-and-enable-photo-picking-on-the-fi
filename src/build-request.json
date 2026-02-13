@@ -1,85 +1,72 @@
 {
   "kind": "build_request",
-  "title": "Restore exact user-provided love letter by updating backend default template and conditional upgrade migration",
-  "priority": "high",
+  "title": "Clear the default love letter and let the user write it on the website",
+  "priority": "normal",
   "requirements": [
     {
-      "id": "REQ-35",
-      "text": "Update the backend default stored love letter template (`loveLetterTemplate` in `backend/main.mo`) so that `getLoveLetter()` returns exactly the same love letter text as `frontend/src/valentine/loveLetter.ts` exports in `defaultLoveLetter`, preserving all characters exactly (line breaks, punctuation, apostrophes, the em dash (—), and the ❤️ emoji).",
-      "target": "backend",
-      "source": {
-        "messageIds": [
-          "msg-4"
-        ],
-        "quotes": [
-          "You did not change the letter bro"
-        ]
-      },
-      "acceptanceCriteria": [
-        "A fresh deploy (no existing state) returns a `getLoveLetter()` value that matches `frontend/src/valentine/loveLetter.ts` `defaultLoveLetter` byte-for-byte (including newlines, the em dash (—), and the ❤️ emoji).",
-        "The returned text begins with \"Wania,\" and ends with \"Shabab ❤️\" with the same line breaks as the frontend default."
-      ]
-    },
-    {
-      "id": "REQ-36",
-      "text": "Add/restore conditional upgrade migration logic (per the project’s conditional migration policy) so that when upgrading an existing deployed canister, the love letter is corrected only if the stored love letter still equals the currently-wrong default backend template (the current Nikita/family letter), and the migration must not overwrite an already-customized love letter that may have been intentionally set via `updateLoveLetter()`.",
-      "target": "backend",
-      "source": {
-        "messageIds": [
-          "msg-4"
-        ],
-        "quotes": [
-          "You did not change the letter bro"
-        ]
-      },
-      "acceptanceCriteria": [
-        "On upgrade, if the stored love letter exactly equals the previously-shipped wrong default backend template string, it is replaced with the correct `defaultLoveLetter` text.",
-        "On upgrade, if the stored love letter differs from the previously-shipped wrong default backend template string (meaning it was customized), it remains unchanged.",
-        "After upgrade, `getLoveLetter()` returns the corrected letter for the default/wrong-template case."
-      ]
-    },
-    {
-      "id": "REQ-37",
-      "text": "Ensure the final love letter UI is using the backend value when present, but displays the exact `defaultLoveLetter` text when the backend value is missing/empty/whitespace-only or the query fails, without altering the user’s letter formatting (keep `whitespace-pre-wrap` rendering so line breaks appear exactly as written).",
+      "id": "REQ-45",
+      "text": "Update the final “My Love Letter” page so the displayed letter is NOT automatically filled with `defaultLoveLetter` when the backend love letter is empty/blank; if the backend love letter is empty/whitespace-only, show an empty letter state with a clear prompt to write a letter instead.",
       "target": "frontend",
       "source": {
         "messageIds": [
           "msg-4"
         ],
         "quotes": [
-          "You did not change the letter bro"
+          "Can you earase the letter and let me weite it on the website"
         ]
       },
       "acceptanceCriteria": [
-        "If the backend returns the correct letter, the UI displays it with the same line breaks as stored.",
-        "If the backend returns an empty/whitespace-only string or fails to load, the UI displays the `defaultLoveLetter` text from `frontend/src/valentine/loveLetter.ts` with all line breaks preserved.",
-        "No part of the letter text is auto-hyphenated or reformatted in a way that changes the letter’s content."
+        "If `getLoveLetter()` returns an empty string or whitespace, the page does not render the prewritten `defaultLoveLetter` content.",
+        "When the letter is empty, the UI shows an English prompt indicating the user can write the letter on the website (e.g., an empty state message and/or textarea placeholder).",
+        "The letter rendering continues to preserve user formatting (line breaks) for non-empty letters (e.g., `whitespace-pre-wrap`)."
+      ]
+    },
+    {
+      "id": "REQ-46",
+      "text": "Change the love letter editing behavior on the final “My Love Letter” page so that starting an edit can begin from a blank textarea (not pre-populated with any prewritten template). Add a clear, explicit control to clear/erase the current letter content while editing.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-4"
+        ],
+        "quotes": [
+          "Can you earase the letter and let me weite it on the website"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Entering edit mode does not automatically insert the prewritten template text into the textarea.",
+        "There is a visible control in edit mode (English label) that clears the textarea content to empty in one action.",
+        "The existing Save and Cancel behaviors still work after clearing the textarea (Save persists what’s currently in the textarea; Cancel abandons edits)."
+      ]
+    },
+    {
+      "id": "REQ-47",
+      "text": "Initialize the backend stored love letter value as empty (no prewritten default letter) so a fresh deployment starts with no letter content until the user writes and saves it via the website.",
+      "target": "backend",
+      "source": {
+        "messageIds": [
+          "msg-4"
+        ],
+        "quotes": [
+          "Can you earase the letter and let me weite it on the website"
+        ]
+      },
+      "acceptanceCriteria": [
+        "On a fresh canister install, `getLoveLetter()` returns an empty string (or clearly empty/whitespace-only value), not the current prewritten Marianne/Nikita letter.",
+        "Saving a new letter via the existing `saveLoveLetter(newLoveLetter)` continues to persist and is returned by `getLoveLetter()` thereafter."
       ]
     }
   ],
   "constraints": [
-    "Backend must remain a single-actor Motoko canister with all logic in `backend/main.mo`.",
-    "Only add `backend/migration.mo` if required for upgrading existing state; follow the conditional migration policy to avoid overwriting customized state.",
-    "Do not edit files under `frontend/src/components/ui` or other frontend immutable paths listed in SYSTEM_CONTEXT.",
-    "Use English for any user-facing text."
+    "Do not edit files under frontend/src/hooks/useInternetIdentity.ts, frontend/src/hooks/useInternetIdentity.tsx, frontend/src/hooks/useActor.ts, frontend/src/main.tsx, or anything under frontend/src/components/ui (compose instead).",
+    "Backend must remain a single Motoko actor with all logic in backend/main.mo; add backend/migration.mo only if required by the conditional migration policy."
   ],
   "nonGoals": [
-    "Do not change quiz questions, welcome screen, memories gallery behavior, or media upload features.",
-    "Do not add new authentication methods beyond Internet Identity.",
-    "Do not introduce new backend services or external databases."
+    "Do not change the quiz flow, welcome screen content, background music behavior, or memories photo picker/lightbox features.",
+    "Do not add any third-party authentication or external database/storage beyond the existing canister state and Internet Identity."
   ],
   "imageRequirements": {
     "required": [],
     "edits": []
-  },
-  "userProfileUpdate": {
-    "goalsToAdd": [],
-    "goalsToRemove": [],
-    "preferencesToAdd": [],
-    "preferencesToRemove": [],
-    "miscToAdd": [],
-    "miscToRemove": [],
-    "fieldsToSet": {},
-    "fieldsToDelete": []
   }
 }

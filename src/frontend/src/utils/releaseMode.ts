@@ -5,7 +5,7 @@
 
 /**
  * Removes preview-only URL parameters and hash fragments
- * to ensure production visitors see the clean Version 24 experience.
+ * to ensure production visitors see the clean Version 21 experience.
  */
 export function sanitizePreviewArtifacts(): void {
   if (typeof window === 'undefined') return;

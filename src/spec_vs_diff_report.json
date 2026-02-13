@@ -1,48 +1,25 @@
 {
   "kind": "spec_vs_diff_report",
   "version": "1.0",
-  "generatedAt": "2026-02-13T21:35:14.125Z",
-  "summary": "Diff adds a backend migration module and wires it into the Motoko actor, but the love letter text updated in both the backend default and migration does not match the requested frontend `defaultLoveLetter` (it uses a “My beloved Marianne… Best,\\nNikita” letter, not the required one that begins with “Wania,” and ends with “Shabab ❤️”). No frontend changes are shown to implement the required fallback-to-default behavior.",
-  "missing_requirements": [
-    {
-      "id": "REQ-35",
-      "requirement": "Update `backend/main.mo` `loveLetterTemplate` so `getLoveLetter()` returns exactly the same text as `frontend/src/valentine/loveLetter.ts` `defaultLoveLetter` (byte-for-byte), beginning with “Wania,” and ending with “Shabab ❤️”.",
-      "reason": "`loveLetterTemplate` was updated, but to a different letter (“My beloved Marianne,… Best,\\nNikita”) rather than the required Wania/Shabab ❤️ text; therefore fresh deploy output will not match the frontend default.",
-      "evidence": [
-        "backend/main.mo (loveLetterTemplate set to \"My beloved Marianne,...\\n\\nBest,\\nNikita\" )",
-        "backend/migration.mo (correctLoveLetterText is also \"My beloved Marianne,...\\n\\nBest,\\nNikita\" )"
-      ]
-    },
-    {
-      "id": "REQ-36",
-      "requirement": "Add conditional upgrade migration so the stored love letter is corrected only if it still equals the previously-shipped wrong default backend template (Nikita/family letter), and must not overwrite customized letters.",
-      "reason": "A conditional migration exists, but it migrates from the wrong template to the same incorrect “My beloved Marianne… Best, Nikita” text, not to the required `defaultLoveLetter` text. Thus the upgrade does not correct to the requested letter.",
-      "evidence": [
-        "backend/migration.mo (if old.loveLetterTemplate == wrongLoveLetterText then correctLoveLetterText; correctLoveLetterText is \"My beloved Marianne,...\\n\\nBest,\\nNikita\" )"
-      ]
-    },
-    {
-      "id": "REQ-37",
-      "requirement": "Frontend should use backend letter when present; otherwise (missing/empty/whitespace-only or query fails) display `defaultLoveLetter` from `frontend/src/valentine/loveLetter.ts`, preserving formatting (`whitespace-pre-wrap`).",
-      "reason": "No frontend files are modified in the diff summary, so there is no evidence the UI fallback/error handling/whitespace-only handling was implemented.",
-      "evidence": [
-        "File diff summary shows only backend/migration.mo added; backend/main.mo and project_state.json modified; no frontend files changed."
-      ]
-    }
-  ],
+  "generatedAt": "2026-02-13T22:29:27.098Z",
+  "summary": "REQ-45/46/47 appear implemented: backend loveLetter is initialized to empty and a migration resets existing state; frontend ValentineMessage now treats empty/whitespace love letters as an empty state with a prompt, editing starts from backend value (blank if empty), and includes a Clear control while keeping save/cancel flows.",
+  "missing_requirements": [],
   "hallucinated_features": [
     {
-      "description": "Added/modified project metadata (`project_state.json`) content unrelated to the specified backend template/migration and frontend fallback requirements.",
-      "reason": "The BuildRequest does not request changes to project tracking/state metadata; only backend/main.mo (and migration if needed) plus frontend behavior were requested.",
+      "description": "Added a backend migration module and wired it into the actor to forcibly reset `loveLetter` to an empty string for existing installs.",
+      "reason": "REQ-47 only requires fresh installs to start with an empty love letter. The BuildRequest allows adding backend/migration.mo only if required by a conditional migration policy, but the diff summary alone does not demonstrate that this migration was required versus optional.",
       "evidence": [
-        "project_state.json"
+        "backend/migration.mo",
+        "backend/main.mo"
       ]
     }
   ],
-  "confidence": 0.86,
+  "confidence": 0.72,
   "changed_files": [
     "backend/main.mo",
     "backend/migration.mo",
+    "frontend-file-summaries.txt",
+    "frontend/src/pages/ValentineMessage.tsx",
     "project_state.json"
   ]
 }

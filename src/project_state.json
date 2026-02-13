@@ -1,12 +1,14 @@
 {
   "schemaVersion": "1.0.0",
-  "projectStateVersion": 35,
-  "summary": "User reports the love letter still was not changed/updated as requested (even after the latest build attempt, e.g., Draft Version 30).",
+  "projectStateVersion": 41,
+  "summary": "User requests reverting all changes back to Version 21 (undo later versions’ changes).",
   "architectural_notes": [
     "Memories page needs a client-side image selection mechanism (e.g., <input type=\"file\" accept=\"image/*\" multiple>) and a strategy for where selected images live (session-only vs persisted upload/storage).",
     "Need a way to include user-provided images in the Memories gallery (e.g., preloaded/static assets or bundled defaults) in addition to user-selected local files.",
     "Love letter content must remain exactly as user-provided (avoid unintended fallback/overwrites across versions/deployments).",
-    "Love letter content must be updated to exactly match the latest user-pasted letter (including line breaks, em dash, and ❤️) across frontend fallback/default and any backend-returned default, without unintended overwrites."
+    "Love letter content must be updated to exactly match the latest user-pasted letter (including line breaks, em dash, and ❤️) across frontend fallback/default and any backend-returned default, without unintended overwrites.",
+    "If the love letter should be user-editable, define an editing UI (e.g., textarea + save) and a persistence strategy (session-only/local storage vs saving to backend via updateLoveLetter), including who is allowed to edit (owner vs any recipient).",
+    "User wants the love letter cleared (not prefilled) and written directly on the website; define whether the editor starts blank vs prefilled and how/where the written letter is persisted (backend vs local/session)."
   ],
   "known_issues": [
     "Love letter text is not visible on the final page (likely not rendering or hidden by styling).",
@@ -16,9 +18,10 @@
     "Deployed/live version is missing the user-provided pictures (bundled/preloaded memory images not present in production build).",
     "User requested reverting from Version 22 to Version 21 (Version 22 not approved for main live).",
     "Live/production love letter text does not match the user-provided letter (Version 21 was correct); must be restored to exact user text.",
-    "User reports the love letter still did not change/update to the exact provided text in the latest build (e.g., Draft Version 30)."
+    "User reports the love letter still did not change/update to the exact provided text in the latest build (e.g., Draft Version 30).",
+    "User requests reverting everything done after Version 21 (restore Version 21 behavior/content)."
   ],
-  "isFixRequest": true,
+  "isFixRequest": false,
   "existing_features": [
     {
       "id": "feature-implement-the-provided-single-page-valentine-quiz-experience-in-the-current-react-app-matching-the-supplied-html-css-js-behavior-a-welcome-screen-welcome-wania-akhand-the-ultimate-valentine-championship-a-start-baby-button-that-starts-the-quiz-multiple-choice-questions-with-the-exact-question-text-options-answers-from-the-user-s-code-and-progression-to-the-next-question-only-on-correct-answers",
@@ -211,6 +214,62 @@
         "REQ-25"
       ],
       "version": 1
+    },
+    {
+      "id": "feature-revert-the-entire-codebase-frontend-backend-to-match-the-exact-behavior-and-content-of-the-previously-approved-version-21-baseline-undoing-all-changes-introduced-after-version-21",
+      "title": "Revert the entire codebase (frontend + backend) to match the exact behavior and content of the previously approved Version 21 baseline, undoing all changes introduced after Version 21.",
+      "reqIds": [
+        "REQ-38"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-a-new-preview-deployment-that-is-built-from-the-rolled-back-version-21-code-and-make-it-available-for-verification",
+      "title": "Create a new preview deployment that is built from the rolled-back Version 21 code and make it available for verification.",
+      "reqIds": [
+        "REQ-40"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-after-the-rollback-preview-is-verified-promote-that-rolled-back-build-to-production-and-run-the-production-smoke-test-checklist-in-frontend-production-smoke-test-md",
+      "title": "After the rollback preview is verified, promote that rolled-back build to production and run the production smoke test checklist in frontend/PRODUCTION_SMOKE_TEST.md.",
+      "reqIds": [
+        "REQ-41"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-a-love-letter-editor-ui-on-the-final-my-love-letter-page-that-lets-the-user-write-their-own-letter-preview-it-with-the-current-formatting-and-save-it-to-the-backend",
+      "title": "Implement a love letter editor UI on the final “My Love Letter” page that lets the user write their own letter, preview it with the current formatting, and save it to the backend.",
+      "reqIds": [
+        "REQ-43"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-react-query-wiring-to-support-saving-the-edited-love-letter-and-refreshing-the-displayed-love-letter-after-a-successful-save",
+      "title": "Add React Query wiring to support saving the edited love letter and refreshing the displayed love letter after a successful save.",
+      "reqIds": [
+        "REQ-44"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-final-my-love-letter-page-so-the-displayed-letter-is-not-automatically-filled-with-defaultloveletter-when-the-backend-love-letter-is-empty-blank-if-the-backend-love-letter-is-empty-whitespace-only-show-an-empty-letter-state-with-a-clear-prompt-to-write-a-letter-instead",
+      "title": "Update the final “My Love Letter” page so the displayed letter is NOT automatically filled with `defaultLoveLetter` when the backend love letter is empty/blank; if the backend love letter is empty/whitespace-only, show an empty letter state with a clear prompt to write a letter instead.",
+      "reqIds": [
+        "REQ-45"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-change-the-love-letter-editing-behavior-on-the-final-my-love-letter-page-so-that-starting-an-edit-can-begin-from-a-blank-textarea-not-pre-populated-with-any-prewritten-template-add-a-clear-explicit-control-to-clear-erase-the-current-letter-content-while-editing",
+      "title": "Change the love letter editing behavior on the final “My Love Letter” page so that starting an edit can begin from a blank textarea (not pre-populated with any prewritten template). Add a clear, explicit control to clear/erase the current letter content while editing.",
+      "reqIds": [
+        "REQ-46"
+      ],
+      "version": 1
     }
   ],
   "new_feature_requests": [
@@ -357,6 +416,48 @@
       "summary": "Ensure the final love letter UI is using the backend value when present, but displays the exact `defaultLoveLetter` text when the backend value is missing/empty/whitespace-only or the query fails, without altering the user’s letter formatting (keep `whitespace-pre-wrap` rendering so line breaks appear exactly as written).",
       "reqIds": [
         "REQ-37"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-26",
+      "summary": "Revert/roll back all changes and restore the app exactly to Version 21 (matching the previously approved baseline).",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-28",
+      "summary": "Ensure backend upgrade behavior after rollback does not corrupt or unexpectedly overwrite existing stored data (e.g., media items and any owner-updated love letter), and only restores Version 21 defaults where appropriate.",
+      "reqIds": [
+        "REQ-39"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-29",
+      "summary": "Allow writing/editing a custom love letter on the final “Our Memories” page (provide an in-page editor and save/update behavior so the user’s own letter is shown instead of the fixed default).",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-30",
+      "summary": "Add a backend update method to let an authenticated user save a custom love letter text that will later be returned by `getLoveLetter()`.",
+      "reqIds": [
+        "REQ-42"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-31",
+      "summary": "Remove/clear the existing default love letter text and let the user write the letter directly on the website (in-page editor).",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-34",
+      "summary": "Initialize the backend stored love letter value as empty (no prewritten default letter) so a fresh deployment starts with no letter content until the user writes and saves it via the website.",
+      "reqIds": [
+        "REQ-47"
       ],
       "status": "pending"
     }

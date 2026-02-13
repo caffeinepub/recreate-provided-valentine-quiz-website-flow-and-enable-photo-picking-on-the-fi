@@ -34,18 +34,15 @@ export enum UserRole {
     guest = "guest"
 }
 export interface backendInterface {
-    addMedia(id: string, blob: ExternalBlob, mediaType: MediaType, description: string, fileName: string): Promise<string>;
     assignCallerUserRole(user: Principal, role: UserRole): Promise<void>;
-    deleteMedia(id: string): Promise<void>;
     getAllMedia(): Promise<Array<MediaItem>>;
     getBouquetGraphic(): Promise<string>;
     getCallerUserProfile(): Promise<UserProfile | null>;
     getCallerUserRole(): Promise<UserRole>;
     getLoveLetter(): Promise<string>;
     getLoveLetterAuthor(): Promise<string>;
-    getOwner(): Promise<Principal | null>;
     getUserProfile(user: Principal): Promise<UserProfile | null>;
     isCallerAdmin(): Promise<boolean>;
     saveCallerUserProfile(profile: UserProfile): Promise<void>;
-    updateLoveLetter(newLetter: string): Promise<void>;
+    saveLoveLetter(newLoveLetter: string): Promise<void>;
 }

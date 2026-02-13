@@ -52,23 +52,17 @@ export interface _SERVICE {
   >,
   '_caffeineStorageUpdateGatewayPrincipals' : ActorMethod<[], undefined>,
   '_initializeAccessControlWithSecret' : ActorMethod<[string], undefined>,
-  'addMedia' : ActorMethod<
-    [string, ExternalBlob, MediaType, string, string],
-    string
-  >,
   'assignCallerUserRole' : ActorMethod<[Principal, UserRole], undefined>,
-  'deleteMedia' : ActorMethod<[string], undefined>,
   'getAllMedia' : ActorMethod<[], Array<MediaItem>>,
   'getBouquetGraphic' : ActorMethod<[], string>,
   'getCallerUserProfile' : ActorMethod<[], [] | [UserProfile]>,
   'getCallerUserRole' : ActorMethod<[], UserRole>,
   'getLoveLetter' : ActorMethod<[], string>,
   'getLoveLetterAuthor' : ActorMethod<[], string>,
-  'getOwner' : ActorMethod<[], [] | [Principal]>,
   'getUserProfile' : ActorMethod<[Principal], [] | [UserProfile]>,
   'isCallerAdmin' : ActorMethod<[], boolean>,
   'saveCallerUserProfile' : ActorMethod<[UserProfile], undefined>,
-  'updateLoveLetter' : ActorMethod<[string], undefined>,
+  'saveLoveLetter' : ActorMethod<[string], undefined>,
 }
 export declare const idlService: IDL.ServiceClass;
 export declare const idlInitArgs: IDL.Type[];
