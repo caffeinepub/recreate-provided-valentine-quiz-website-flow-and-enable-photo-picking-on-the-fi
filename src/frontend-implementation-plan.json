@@ -1,59 +1,37 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "Promote approved Version 24 preview to live/production (frontend-only)",
+  "title": "Production promotion + smoke test documentation for approved Version 25 (no app changes)",
   "requirements": [
     {
-      "id": "REQ-21",
-      "summary": "Ensure the live/production build surfaces the approved Version 24 experience and does not expose preview-only artifacts in the UI/URL.",
+      "id": "REQ-23",
+      "summary": "Document the promotion of the already-approved Version 25 preview build to production with no code/content changes, ensuring production runs in release mode without preview artifacts.",
       "acceptanceCriteria": [
-        "A production deployment is created from the exact same code/content as the approved Version 24 preview.",
-        "Visiting the app’s live/production URL shows the Version 24 experience (welcome screen, quiz flow, and final memories/love-letter view) rather than an older version.",
-        "No development/preview build artifacts are exposed in production (e.g., preview-only URLs/labels)."
+        "Production deployment is promoted from the exact approved Version 25 build/commit (no additional changes introduced).",
+        "Visiting the production URL loads Version 25 as the active main version.",
+        "No preview-only URL parameters, version query strings, or debug labels are visible in the production UI (release mode behavior remains intact)."
       ],
       "file_operations": [
         {
-          "path": "frontend/src/utils/releaseMode.ts",
+          "path": "frontend/PRODUCTION_PROMOTION_V25.md",
           "operation": "create",
-          "description": "Add a small release-mode helper that sanitizes/removes preview-only URL/query/hash markers (e.g., preview/version flags) on initial load, leveraging the existing urlParams utilities, so production visitors do not see preview-only artifacts."
-        },
-        {
-          "path": "frontend/src/App.tsx",
-          "operation": "modify",
-          "description": "Wire the release-mode sanitization into the app bootstrap (run once on app mount) to ensure production loads the standard Version 24 welcome → quiz → memories flow without preview-only labels/URLs."
-        },
-        {
-          "path": "frontend/PRODUCTION_PROMOTION.md",
-          "operation": "create",
-          "description": "Document the concrete promotion steps to ensure production is deployed from the exact approved Version 24 code (e.g., deploy from the same commit/tag as preview) and include a short verification checklist focused on avoiding preview-only artifacts."
+          "description": "Create a Version 25-specific production promotion runbook that references the existing frontend/PRODUCTION_PROMOTION.md and records the exact approved Version 25 build/commit identifier, production URL, and explicit confirmation that no code/content changes were introduced during promotion. Include a verification note to confirm release-mode behavior (e.g., preview URL parameters are sanitized and no debug labels appear) without requiring any application code changes."
         }
       ]
     },
     {
-      "id": "REQ-22",
-      "summary": "Provide a production smoke-test procedure and ensure the core Valentine flow interactions are reliable and match the intended production UX.",
+      "id": "REQ-24",
+      "summary": "Provide a Version 25 production smoke test results log aligned to frontend/PRODUCTION_SMOKE_TEST.md and the specified end-to-end Valentine flow checks.",
       "acceptanceCriteria": [
-        "In production, clicking the Start button transitions from the Welcome screen to the Quiz screen.",
-        "In production, the quiz allows progressing only on correct answers and reaches the final page on completion.",
-        "In production, the “Open Our Memories” interaction reliably opens the memories content via tap/click on desktop and mobile.",
-        "In production, the memories gallery displays thumbnails and can open the lightbox view when a thumbnail is clicked/tapped.",
-        "In production, the love letter text is visible and readable in the final memories view."
+        "Smoke test is completed on at least 2 browsers and 2 device types as suggested by the checklist.",
+        "The following core flow passes in production: Welcome screen → Start button starts background music → quiz progression (no advance on wrong answers) → quiz completion → final page → “Open Our Memories” reveal → memories gallery thumbnails render → lightbox opens/closes → love letter text is visible and readable.",
+        "Any failures are documented with notes sufficient to reproduce (or the run is marked as fully passing)."
       ],
       "file_operations": [
         {
-          "path": "frontend/src/pages/ValentineMessage.tsx",
-          "operation": "modify",
-          "description": "Align the memories CTA copy with the required production smoke-test wording (use “Open Our Memories”), and harden the tap/click interaction (accessibility/interaction attributes) so the memories reveal is reliable on desktop and mobile."
-        },
-        {
-          "path": "frontend/src/components/LocalMemoriesPicker.tsx",
-          "operation": "modify",
-          "description": "Review and, if needed, refine thumbnail click/tap handling so opening the MemoryLightbox is consistent across mobile/desktop (no interaction blockers); keep UI theme unchanged."
-        },
-        {
-          "path": "frontend/PRODUCTION_SMOKE_TEST.md",
+          "path": "frontend/PRODUCTION_SMOKE_TEST_RESULTS_V25.md",
           "operation": "create",
-          "description": "Add a production smoke-test checklist that explicitly validates: Welcome → Start → quiz gating on correct answers → completion → “Open Our Memories” reveal → gallery thumbnails render → lightbox opens on thumbnail tap/click → love letter text renders."
+          "description": "Create a production smoke test results template/log for Version 25 that points testers to execute the checklist in frontend/PRODUCTION_SMOKE_TEST.md and captures: production URL, date/time, tester, browser/device matrix (at least 2 browsers and 2 device types), pass/fail per section, and reproducible notes/screenshots references for any failures. Ensure the log explicitly calls out the required core Valentine flow and records whether it passed end-to-end in production."
         }
       ]
     }

@@ -1,7 +1,7 @@
 {
   "kind": "coverage_report",
   "version": "1.0",
-  "generatedAt": "2026-02-13T20:32:46.193Z",
+  "generatedAt": "2026-02-13T20:42:53.609Z",
   "sources": {
     "buildRequest": true,
     "implementationPlan": true
@@ -11,33 +11,25 @@
     "implemented": 2,
     "items": [
       {
-        "id": "REQ-21",
-        "summary": "Publish the user-approved preview deployment (Version 24) to the live/production site so it becomes the active main version that users see when visiting the app.",
+        "id": "REQ-23",
+        "summary": "Publish the user-approved preview deployment (Version 25) to the live/production site with no code or content changes, so it becomes the active main version that users see when visiting the app.",
         "status": "implemented",
         "plannedFiles": [
-          "frontend/src/utils/releaseMode.ts",
-          "frontend/src/App.tsx",
-          "frontend/PRODUCTION_PROMOTION.md"
+          "frontend/PRODUCTION_PROMOTION_V25.md"
         ],
         "matchedFiles": [
-          "frontend/src/utils/releaseMode.ts",
-          "frontend/src/App.tsx",
-          "frontend/PRODUCTION_PROMOTION.md"
+          "frontend/PRODUCTION_PROMOTION_V25.md"
         ]
       },
       {
-        "id": "REQ-22",
-        "summary": "After promoting Version 24 to production, perform a production smoke test that confirms the core Valentine flow works end-to-end: Welcome screen → Start button → quiz progression → final “Our Memories” reveal → memories gallery renders → love letter text renders.",
+        "id": "REQ-24",
+        "summary": "After promoting Version 25 to production, perform a production smoke test using the checklist in frontend/PRODUCTION_SMOKE_TEST.md to confirm the core Valentine flow works end-to-end in production.",
         "status": "implemented",
         "plannedFiles": [
-          "frontend/src/pages/ValentineMessage.tsx",
-          "frontend/src/components/LocalMemoriesPicker.tsx",
-          "frontend/PRODUCTION_SMOKE_TEST.md"
+          "frontend/PRODUCTION_SMOKE_TEST_RESULTS_V25.md"
         ],
         "matchedFiles": [
-          "frontend/src/pages/ValentineMessage.tsx",
-          "frontend/src/components/LocalMemoriesPicker.tsx",
-          "frontend/PRODUCTION_SMOKE_TEST.md"
+          "frontend/PRODUCTION_SMOKE_TEST_RESULTS_V25.md"
         ]
       }
     ]
@@ -48,12 +40,8 @@
     "feature_evidence.json",
     "frontend-file-summaries.txt",
     "frontend-implementation-plan.json",
-    "frontend/PRODUCTION_PROMOTION.md",
-    "frontend/PRODUCTION_SMOKE_TEST.md",
-    "frontend/src/App.tsx",
-    "frontend/src/components/LocalMemoriesPicker.tsx",
-    "frontend/src/pages/ValentineMessage.tsx",
-    "frontend/src/utils/releaseMode.ts",
+    "frontend/PRODUCTION_PROMOTION_V25.md",
+    "frontend/PRODUCTION_SMOKE_TEST_RESULTS_V25.md",
     "project_state.json",
     "scratch/component-selection.json",
     "spec.md",

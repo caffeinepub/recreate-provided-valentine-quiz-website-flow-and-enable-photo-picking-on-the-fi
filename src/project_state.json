@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0.0",
-  "projectStateVersion": 23,
-  "summary": "Valentine-themed interactive quiz website (Wania) with background music, heart animations, and an “Our Memories” gallery + love letter; user approved Version 24 preview and confirmed to proceed with the build/deploy sequence.",
+  "projectStateVersion": 25,
+  "summary": "Valentine-themed interactive quiz website (Wania) with background music, heart animations, and an “Our Memories” gallery + love letter; user approved Version 25 and requested it be published to the live/production site with no changes.",
   "architectural_notes": [
     "Memories page needs a client-side image selection mechanism (e.g., <input type=\"file\" accept=\"image/*\" multiple>) and a strategy for where selected images live (session-only vs persisted upload/storage).",
     "Need a way to include user-provided images in the Memories gallery (e.g., preloaded/static assets or bundled defaults) in addition to user-selected local files."
@@ -183,6 +183,22 @@
         "REQ-22"
       ],
       "version": 1
+    },
+    {
+      "id": "feature-publish-the-user-approved-preview-deployment-version-25-to-the-live-production-site-with-no-code-or-content-changes-so-it-becomes-the-active-main-version-that-users-see-when-visiting-the-app",
+      "title": "Publish the user-approved preview deployment (Version 25) to the live/production site with no code or content changes, so it becomes the active main version that users see when visiting the app.",
+      "reqIds": [
+        "REQ-23"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-after-promoting-version-25-to-production-perform-a-production-smoke-test-using-the-checklist-in-frontend-production-smoke-test-md-to-confirm-the-core-valentine-flow-works-end-to-end-in-production",
+      "title": "After promoting Version 25 to production, perform a production smoke test using the checklist in frontend/PRODUCTION_SMOKE_TEST.md to confirm the core Valentine flow works end-to-end in production.",
+      "reqIds": [
+        "REQ-24"
+      ],
+      "version": 1
     }
   ],
   "new_feature_requests": [
@@ -221,6 +237,12 @@
     {
       "id": "AR-10",
       "summary": "Publish the user-approved preview deployment (Version 24) to the live/production site so it becomes the active main version.",
+      "reqIds": [],
+      "status": "in_progress"
+    },
+    {
+      "id": "AR-11",
+      "summary": "Publish the user-approved preview deployment (Version 25) to the live/production site with no changes.",
       "reqIds": [],
       "status": "in_progress"
     }

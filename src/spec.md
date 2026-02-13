@@ -1,11 +1,10 @@
 # Specification
 
 ## Summary
-**Goal:** Promote the user-approved Version 24 preview deployment to live/production and verify the core Valentine flow works end-to-end in production.
+**Goal:** Promote the already user-approved Version 25 preview build to the live/production site with no code or content changes, and verify it works via a production smoke test.
 
 **Planned changes:**
-- Deploy the live/production site from the exact same code/content as the approved Version 24 preview.
-- Ensure production does not expose any preview/development artifacts (e.g., preview-only URLs/labels).
-- Run a production smoke test covering: Welcome screen → Start → quiz progression (correct answers required) → final “Our Memories” reveal → memories gallery (thumbnails + lightbox) → love letter text visibility.
+- Promote/deploy the exact approved Version 25 build/commit to production (publish-only; no changes).
+- Run the production smoke test checklist (frontend/PRODUCTION_SMOKE_TEST.md) after deployment and record pass/fail notes.
 
-**User-visible outcome:** Visiting the app’s production URL shows the Version 24 experience, and users can complete the full Valentine flow through the final memories and love letter view.
+**User-visible outcome:** Visiting the production URL loads Version 25 as the active main version (without any preview/debug indicators), and the core Valentine flow works end-to-end in production.

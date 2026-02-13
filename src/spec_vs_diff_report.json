@@ -1,47 +1,41 @@
 {
   "kind": "spec_vs_diff_report",
   "version": "1.0",
-  "generatedAt": "2026-02-13T20:32:46.190Z",
-  "summary": "Diff adds a frontend utility to sanitize preview URL artifacts and adds documentation for production promotion and smoke testing. It also includes substantial backend/main.mo changes (access control/owner/media/profile logic) and frontend component tweaks unrelated to a deploy-only promotion. The diff does not provide evidence of an actual production deployment being created from the exact approved Version 24 code, nor evidence that the production smoke test was actually performed.",
+  "generatedAt": "2026-02-13T20:42:53.606Z",
+  "summary": "The diff is not publish-only: it modifies backend code and project metadata, and adds promotion/smoke-test documentation templates. REQ-23’s “no code/content changes” constraint is violated by the backend/main.mo modification, and REQ-24’s smoke test is not shown as completed (results file is a blank template).",
   "missing_requirements": [
     {
-      "id": "REQ-21",
-      "requirement": "Publish the user-approved preview deployment (Version 24) to the live/production site so it becomes the active main version that users see when visiting the app.",
-      "reason": "The diff contains code/docs changes but no deployment configuration, release tagging, environment switch, or other verifiable evidence that production was built and deployed from the exact same approved Version 24 preview code/content.",
+      "id": "REQ-23",
+      "requirement": "Publish the user-approved preview deployment (Version 25) to the live/production site with no code or content changes (promote the exact approved Version 25 build/commit).",
+      "reason": "The diff includes code/project changes, which contradicts the requirement to promote with no additional changes introduced. There is no evidence in the diff of an actual deployment/promotion action; instead there are repository changes.",
       "evidence": [
-        "frontend/PRODUCTION_PROMOTION.md",
-        "project_state.json"
+        "backend/main.mo",
+        "project_state.json",
+        "frontend-file-summaries.txt"
       ]
     },
     {
-      "id": "REQ-22",
-      "requirement": "After promoting Version 24 to production, perform a production smoke test that confirms the core Valentine flow works end-to-end.",
-      "reason": "A checklist document was added, but the diff provides no evidence (results, logs, completed checklist, CI run, or similar) that the smoke test was actually executed in production.",
+      "id": "REQ-24",
+      "requirement": "Perform a production smoke test using frontend/PRODUCTION_SMOKE_TEST.md on at least 2 browsers and 2 device types, and document pass/fail (or failures with repro notes).",
+      "reason": "A results file was added but it is not filled in (placeholders like \"[To be completed]\" and unchecked items), so there is no evidence the smoke test was actually executed and recorded.",
       "evidence": [
-        "frontend/PRODUCTION_SMOKE_TEST.md"
+        "frontend/PRODUCTION_SMOKE_TEST_RESULTS_V25.md"
       ]
     }
   ],
   "hallucinated_features": [
     {
-      "description": "Backend access control/authorization system initialization and owner-based authorization logic for modifying content/media.",
-      "reason": "BuildRequest is deploy-only promotion; it explicitly constrains backend architecture and states non-goal: do not add new backend features or modify backend data schemas unless required for production promotion. These backend logic additions are not shown as required for promotion.",
+      "description": "New/expanded backend authorization/access-control behavior including owner initialization and restrictions on who can add media / access profiles.",
+      "reason": "BuildRequest explicitly constrains this to publish-only with no new features or backend changes; these backend functional changes are not requested by REQ-23/REQ-24.",
       "evidence": [
         "backend/main.mo"
       ]
     },
     {
-      "description": "Backend user profile management functions (getCallerUserProfile, getUserProfile, saveCallerUserProfile).",
-      "reason": "Not requested by REQ-21/REQ-22 and appears to be new/expanded backend feature work beyond production promotion.",
+      "description": "Added a dedicated production promotion record document (Production Promotion - Version 25).",
+      "reason": "REQ-23 requests promotion with no changes; while documentation may be helpful, this specific new document is not requested as a requirement and constitutes an added artifact/change.",
       "evidence": [
-        "backend/main.mo"
-      ]
-    },
-    {
-      "description": "Frontend local memories picker behavior changes (file validation, object URL handling, lightbox open state, toasts, preloaded initialization).",
-      "reason": "Not requested by REQ-21/REQ-22 (which focus on promotion and smoke test). These are functional changes beyond deploy-only promotion.",
-      "evidence": [
-        "frontend/src/components/LocalMemoriesPicker.tsx"
+        "frontend/PRODUCTION_PROMOTION_V25.md"
       ]
     }
   ],
@@ -49,12 +43,8 @@
   "changed_files": [
     "backend/main.mo",
     "frontend-file-summaries.txt",
-    "frontend/PRODUCTION_PROMOTION.md",
-    "frontend/PRODUCTION_SMOKE_TEST.md",
-    "frontend/src/App.tsx",
-    "frontend/src/components/LocalMemoriesPicker.tsx",
-    "frontend/src/pages/ValentineMessage.tsx",
-    "frontend/src/utils/releaseMode.ts",
+    "frontend/PRODUCTION_PROMOTION_V25.md",
+    "frontend/PRODUCTION_SMOKE_TEST_RESULTS_V25.md",
     "project_state.json"
   ]
 }
